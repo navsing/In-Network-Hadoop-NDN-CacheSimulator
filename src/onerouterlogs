@@ -1,0 +1,1002 @@
+Script started on Tue 24 Jan 2017 01:58:28 PM MST
+navdeep@italic:~/Documents/simulator/src$ lsperl cache_script.plls[Kperl cache_script.pl
+Trace: hadoop-bayes; beginning 1 sim with cache size 1
+java CacheSim oneRouter.txt hadoop-bayes 1 1
+55129124,1608,2.9167885925413942E-5,451574044637,12322202,2.728722375951714E-5
+Trace: hadoop-bayes; beginning 1 sim with cache size 8
+java CacheSim oneRouter.txt hadoop-bayes 1 8
+55129124,2063,3.7421236731423486E-5,451574044637,15830994,3.505736033328891E-5
+Trace: hadoop-bayes; beginning 1 sim with cache size 16
+java CacheSim oneRouter.txt hadoop-bayes 1 16
+55129124,2082,3.776588214969641E-5,451574044637,15976828,3.5380306263711525E-5
+Trace: hadoop-bayes; beginning 1 sim with cache size 32
+java CacheSim oneRouter.txt hadoop-bayes 1 32
+55129124,2159,3.9162603055328793E-5,451574044637,16563883,3.6680325622600736E-5
+Trace: hadoop-bayes; beginning 1 sim with cache size 64
+java CacheSim oneRouter.txt hadoop-bayes 1 64
+55129124,201191,0.0036494503340920126,451574044637,1646353500,0.0036458107359191323
+Trace: hadoop-bayes; beginning 1 sim with cache size 128
+java CacheSim oneRouter.txt hadoop-bayes 1 128
+55129124,307385,0.005575727994517018,451574044637,2515550832,0.005570627590038169
+Trace: hadoop-bayes; beginning 1 sim with cache size 256
+java CacheSim oneRouter.txt hadoop-bayes 1 256
+55129124,654120,0.011865234789509805,451574044637,5354364748,0.011857113604268669
+Trace: hadoop-bayes; beginning 1 sim with cache size 512
+java CacheSim oneRouter.txt hadoop-bayes 1 512
+55129124,1342675,0.02435509405155794,451574044637,10992915307,0.024343549939493773
+Trace: hadoop-bayes; beginning 1 sim with cache size 1024
+java CacheSim oneRouter.txt hadoop-bayes 1 1024
+55129124,2189344,0.0397130199275432,451574044637,17926378931,0.03969754051167889
+Trace: hadoop-bayes; beginning 1 sim with cache size 2048
+java CacheSim oneRouter.txt hadoop-bayes 1 2048
+55129124,3009574,0.05459136263438541,451574044637,24643540745,0.05457253586133329
+Trace: hadoop-bayes; beginning 3 sim with cache size 1
+java CacheSim oneRouter.txt hadoop-bayes 3 1
+LRU:
+Total Accesses: 55129124
+Total Hits: 0
+Hit Ratio: 0.0
+Total Size: 451574044637
+Total Hit Size: 0
+Size Hit Ratio: 0.0
+
+Trace: hadoop-bayes; beginning 3 sim with cache size 8
+java CacheSim oneRouter.txt hadoop-bayes 3 8
+LRU:
+Total Accesses: 55129124
+Total Hits: 0
+Hit Ratio: 0.0
+Total Size: 451574044637
+Total Hit Size: 0
+Size Hit Ratio: 0.0
+
+Trace: hadoop-bayes; beginning 3 sim with cache size 16
+java CacheSim oneRouter.txt hadoop-bayes 3 16
+LRU:
+Total Accesses: 55129124
+Total Hits: 0
+Hit Ratio: 0.0
+Total Size: 451574044637
+Total Hit Size: 0
+Size Hit Ratio: 0.0
+
+Trace: hadoop-bayes; beginning 3 sim with cache size 32
+java CacheSim oneRouter.txt hadoop-bayes 3 32
+LRU:
+Total Accesses: 55129124
+Total Hits: 0
+Hit Ratio: 0.0
+Total Size: 451574044637
+Total Hit Size: 0
+Size Hit Ratio: 0.0
+
+Trace: hadoop-bayes; beginning 3 sim with cache size 64
+java CacheSim oneRouter.txt hadoop-bayes 3 64
+LRU:
+Total Accesses: 55129124
+Total Hits: 277290
+Hit Ratio: 0.005029827791205244
+Total Size: 451574044637
+Total Hit Size: 2271559680
+Size Hit Ratio: 0.005030314977084222
+
+Trace: hadoop-bayes; beginning 3 sim with cache size 128
+java CacheSim oneRouter.txt hadoop-bayes 3 128
+LRU:
+Total Accesses: 55129124
+Total Hits: 752076
+Hit Ratio: 0.013642081452264686
+Total Size: 451574044637
+Total Hit Size: 6161006592
+Size Hit Ratio: 0.013643402815484125
+
+Trace: hadoop-bayes; beginning 3 sim with cache size 256
+java CacheSim oneRouter.txt hadoop-bayes 3 256
+LRU:
+Total Accesses: 55129124
+Total Hits: 757876
+Hit Ratio: 0.013747289001000633
+Total Size: 451574044637
+Total Hit Size: 6208203396
+Size Hit Ratio: 0.01374791901733523
+
+Trace: hadoop-bayes; beginning 3 sim with cache size 512
+java CacheSim oneRouter.txt hadoop-bayes 3 512
+LRU:
+Total Accesses: 55129124
+Total Hits: 758199
+Hit Ratio: 0.013753147973111272
+Total Size: 451574044637
+Total Hit Size: 6210312565
+Size Hit Ratio: 0.01375258972200714
+
+Trace: hadoop-bayes; beginning 3 sim with cache size 1024
+java CacheSim oneRouter.txt hadoop-bayes 3 1024
+LRU:
+Total Accesses: 55129124
+Total Hits: 760398
+Hit Ratio: 0.013793036145468228
+Total Size: 451574044637
+Total Hit Size: 6227350474
+Size Hit Ratio: 0.01379031976695181
+
+Trace: hadoop-bayes; beginning 3 sim with cache size 2048
+java CacheSim oneRouter.txt hadoop-bayes 3 2048
+LRU:
+Total Accesses: 55129124
+Total Hits: 761228
+Hit Ratio: 0.013808091708476994
+Total Size: 451574044637
+Total Hit Size: 6234021322
+Size Hit Ratio: 0.013805092201460003
+
+Trace: hadoop-bayes; beginning 4 sim with cache size 1
+java CacheSim oneRouter.txt hadoop-bayes 4 1
+55129124,10755,1.9508744597501677E-4,451574044637,80802640,1.7893552776035567E-4
+Trace: hadoop-bayes; beginning 4 sim with cache size 8
+java CacheSim oneRouter.txt hadoop-bayes 4 8
+55129124,11282,2.046468215239553E-4,451574044637,84957568,1.8813651716473995E-4
+Trace: hadoop-bayes; beginning 4 sim with cache size 16
+java CacheSim oneRouter.txt hadoop-bayes 4 16
+55129124,11282,2.046468215239553E-4,451574044637,84957568,1.8813651716473995E-4
+Trace: hadoop-bayes; beginning 4 sim with cache size 32
+java CacheSim oneRouter.txt hadoop-bayes 4 32
+55129124,11366,2.0617051705737244E-4,451574044637,85601164,1.895617452256604E-4
+Trace: hadoop-bayes; beginning 4 sim with cache size 64
+java CacheSim oneRouter.txt hadoop-bayes 4 64
+55129124,2133815,0.03870576648379176,451574044637,17470166154,0.03868726814899975
+Trace: hadoop-bayes; beginning 4 sim with cache size 128
+java CacheSim oneRouter.txt hadoop-bayes 4 128
+55129124,2738620,0.04967646502055792,451574044637,22424065332,0.049657560256869265
+Trace: hadoop-bayes; beginning 4 sim with cache size 256
+java CacheSim oneRouter.txt hadoop-bayes 4 256
+55129124,3034257,0.055039093311187025,451574044637,24845041357,0.05501875418232199
+Trace: hadoop-bayes; beginning 4 sim with cache size 512
+java CacheSim oneRouter.txt hadoop-bayes 4 512
+55129124,3258477,0.059106272031458365,451574044637,26680752287,0.059083892451009784
+Trace: hadoop-bayes; beginning 4 sim with cache size 1024
+java CacheSim oneRouter.txt hadoop-bayes 4 1024
+55129124,3423631,0.06210203884248188,451574044637,28033097315,0.062078628406410166
+Trace: hadoop-bayes; beginning 4 sim with cache size 2048
+java CacheSim oneRouter.txt hadoop-bayes 4 2048
+55129124,3491386,0.06333106254327567,451574044637,28587806194,0.06330701804834786
+Trace: hadoop-bayes; beginning 5 sim with cache size 1
+java CacheSim oneRouter.txt hadoop-bayes 5 1
+55129124,4417,8.012099013218494E-5,451574044637,33564123,7.432695346115537E-5
+Trace: hadoop-bayes; beginning 5 sim with cache size 8
+java CacheSim oneRouter.txt hadoop-bayes 5 8
+55129124,2590,4.698061228036201E-5,451574044637,19641507,4.349565089771473E-5
+Trace: hadoop-bayes; beginning 5 sim with cache size 16
+java CacheSim oneRouter.txt hadoop-bayes 5 16
+55129124,4026,7.302855020877893E-5,451574044637,30358350,6.722784526821887E-5
+Trace: hadoop-bayes; beginning 5 sim with cache size 32
+java CacheSim oneRouter.txt hadoop-bayes 5 32
+55129124,194763,0.0035328513473205196,451574044637,1590840205,0.0035228778622092964
+Trace: hadoop-bayes; beginning 5 sim with cache size 64
+java CacheSim oneRouter.txt hadoop-bayes 5 64
+55129124,413993,0.007509515297213865,451574044637,3385825691,0.007497830602114682
+Trace: hadoop-bayes; beginning 5 sim with cache size 128
+java CacheSim oneRouter.txt hadoop-bayes 5 128
+55129124,694960,0.01260604104647119,451574044637,5686326028,0.012592233976979304
+Trace: hadoop-bayes; beginning 5 sim with cache size 256
+java CacheSim oneRouter.txt hadoop-bayes 5 256
+55129124,1335997,0.024233960256651275,451574044637,10937501034,0.02422083634765183
+Trace: hadoop-bayes; beginning 5 sim with cache size 512
+java CacheSim oneRouter.txt hadoop-bayes 5 512
+55129124,2516663,0.045650335383526135,451574044637,20607977733,0.045635877388758746
+Trace: hadoop-bayes; beginning 5 sim with cache size 1024
+java CacheSim oneRouter.txt hadoop-bayes 5 1024
+55129124,2828166,0.051300760737645675,451574044637,23157588270,0.05128192938683033
+Trace: hadoop-bayes; beginning 5 sim with cache size 2048
+java CacheSim oneRouter.txt hadoop-bayes 5 2048
+55129124,3307637,0.05999799670315821,451574044637,27083547811,0.05997587357522118
+Trace: hadoop-bayes; beginning 7 sim with cache size 1
+java CacheSim oneRouter.txt hadoop-bayes 7 1
+55129124,6175,1.1200976093870093E-4,451574044637,46160657,1.0222167892113124E-4
+Trace: hadoop-bayes; beginning 7 sim with cache size 8
+java CacheSim oneRouter.txt hadoop-bayes 7 8
+55129124,6216,1.1275346947286882E-4,451574044637,46585479,1.0316243715346387E-4
+Trace: hadoop-bayes; beginning 7 sim with cache size 16
+java CacheSim oneRouter.txt hadoop-bayes 7 16
+55129124,5903,1.0707588968763589E-4,451574044637,43834736,9.707098209162302E-5
+Trace: hadoop-bayes; beginning 7 sim with cache size 32
+java CacheSim oneRouter.txt hadoop-bayes 7 32
+55129124,5921,1.0740239587336813E-4,451574044637,44041171,9.752812749767917E-5
+Trace: hadoop-bayes; beginning 7 sim with cache size 64
+java CacheSim oneRouter.txt hadoop-bayes 7 64
+55129124,236338,0.0042869899401993036,451574044637,1930946357,0.00427603486057796
+Trace: hadoop-bayes; beginning 7 sim with cache size 128
+java CacheSim oneRouter.txt hadoop-bayes 7 128
+55129124,453295,0.008222423414527683,451574044637,3707541084,0.008210261701334771
+Trace: hadoop-bayes; beginning 7 sim with cache size 256
+java CacheSim oneRouter.txt hadoop-bayes 7 256
+55129124,684999,0.012425356151133474,451574044637,5604748116,0.012411581627782447
+Trace: hadoop-bayes; beginning 7 sim with cache size 512
+java CacheSim oneRouter.txt hadoop-bayes 7 512
+55129124,1452021,0.026338546572951167,451574044637,11886961276,0.026323393510261184
+Trace: hadoop-bayes; beginning 7 sim with cache size 1024
+java CacheSim oneRouter.txt hadoop-bayes 7 1024
+55129124,2368197,0.042957276085141494,451574044637,19390584646,0.042939989302501244
+Trace: hadoop-bayes; beginning 7 sim with cache size 2048
+java CacheSim oneRouter.txt hadoop-bayes 7 2048
+55129124,3061518,0.05553358692947851,451574044637,25068467273,0.055513525568440074
+Trace: hadoop-bayes; beginning 8 sim with cache size 1
+java CacheSim oneRouter.txt hadoop-bayes 8 1
+55129124,11101,2.0136362043409215E-4,451574044637,83597158,1.8512392152033447E-4
+Trace: hadoop-bayes; beginning 8 sim with cache size 8
+java CacheSim oneRouter.txt hadoop-bayes 8 8
+55129124,11185,2.028873159675093E-4,451574044637,84240754,1.8654914958125493E-4
+Trace: hadoop-bayes; beginning 8 sim with cache size 16
+java CacheSim oneRouter.txt hadoop-bayes 8 16
+55129124,2623053,0.04758016833352911,451574044637,21477321422,0.04756101834697929
+Trace: hadoop-bayes; beginning 8 sim with cache size 32
+java CacheSim oneRouter.txt hadoop-bayes 8 32
+55129124,2933863,0.05321802319949796,451574044637,24022821768,0.05319796842467078
+Trace: hadoop-bayes; beginning 8 sim with cache size 64
+java CacheSim oneRouter.txt hadoop-bayes 8 64
+55129124,3093767,0.05611855903968291,451574044637,25331883105,0.05609685367404842
+Trace: hadoop-bayes; beginning 8 sim with cache size 128
+java CacheSim oneRouter.txt hadoop-bayes 8 128
+55129124,3270592,0.059326028833688704,451574044637,26779897256,0.0593034466308336
+Trace: hadoop-bayes; beginning 8 sim with cache size 256
+java CacheSim oneRouter.txt hadoop-bayes 8 256
+55129124,3340684,0.06059744392093007,451574044637,27353618386,0.06057393845119761
+Trace: hadoop-bayes; beginning 8 sim with cache size 512
+java CacheSim oneRouter.txt hadoop-bayes 8 512
+55129124,3371360,0.06115388301834798,451574044637,27604647831,0.0611298371968879
+Trace: hadoop-bayes; beginning 8 sim with cache size 1024
+java CacheSim oneRouter.txt hadoop-bayes 8 1024
+55129124,3471253,0.06296586537453416,451574044637,28422387146,0.0629407014941425
+Trace: hadoop-bayes; beginning 8 sim with cache size 2048
+java CacheSim oneRouter.txt hadoop-bayes 8 2048
+55129124,3741149,0.0678615716803336,451574044637,30632303256,0.06783450824908223
+Trace: hadoopKMeans; beginning 1 sim with cache size 1
+java CacheSim oneRouter.txt hadoopKMeans 1 1
+159526553,851908,0.005340226965225031,1266187131762,549106500,4.3366931018788246E-4
+Trace: hadoopKMeans; beginning 1 sim with cache size 8
+java CacheSim oneRouter.txt hadoopKMeans 1 8
+159526553,3828808,0.02400107021681839,1266187131762,3874043819,0.0030596139558052215
+Trace: hadoopKMeans; beginning 1 sim with cache size 16
+java CacheSim oneRouter.txt hadoopKMeans 1 16
+159526553,4293688,0.026915193234320057,1266187131762,5447104623,0.004301974397275639
+Trace: hadoopKMeans; beginning 1 sim with cache size 32
+java CacheSim oneRouter.txt hadoopKMeans 1 32
+159526553,4608157,0.028886457541648255,1266187131762,6410157945,0.005062567597002629
+Trace: hadoopKMeans; beginning 1 sim with cache size 64
+java CacheSim oneRouter.txt hadoopKMeans 1 64
+159526553,11456433,0.0718152106000811,1266187131762,61156277212,0.048299556738423156
+Trace: hadoopKMeans; beginning 1 sim with cache size 128
+java CacheSim oneRouter.txt hadoopKMeans 1 128
+159526553,12777176,0.08009435269374873,1266187131762,71322411978,0.05632849220221437
+Trace: hadoopKMeans; beginning 1 sim with cache size 256
+java CacheSim oneRouter.txt hadoopKMeans 1 256
+159526553,14086559,0.08830228407179337,1266187131762,78491542650,0.06199047572120938
+Trace: hadoopKMeans; beginning 1 sim with cache size 512
+java CacheSim oneRouter.txt hadoopKMeans 1 512
+159526553,14764570,0.09255242918713351,1266187131762,82151370159,0.0648809074885162
+Trace: hadoopKMeans; beginning 1 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopKMeans 1 1024
+159526553,15177182,0.09513890769018246,1266187131762,84546259410,0.06677232558219666
+Trace: hadoopKMeans; beginning 1 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopKMeans 1 2048
+^CTrace: hadoopKMeans; beginning 3 sim with cache size 1
+java CacheSim oneRouter.txt hadoopKMeans 3 1
+^CTrace: hadoopKMeans; beginning 3 sim with cache size 8
+java CacheSim oneRouter.txt hadoopKMeans 3 8
+^C^CTrace: hadoopKMeans; beginning 3 sim with cache size 16
+java CacheSim oneRouter.txt hadoopKMeans 3 16
+^CTrace: hadoopKMeans; beginning 3 sim with cache size 32
+java CacheSim oneRouter.txt hadoopKMeans 3 32
+^CTrace: hadoopKMeans; beginning 3 sim with cache size 64
+java CacheSim oneRouter.txt hadoopKMeans 3 64
+^CTrace: hadoopKMeans; beginning 3 sim with cache size 128
+java CacheSim oneRouter.txt hadoopKMeans 3 128
+^CTrace: hadoopKMeans; beginning 3 sim with cache size 256
+java CacheSim oneRouter.txt hadoopKMeans 3 256
+^CTrace: hadoopKMeans; beginning 3 sim with cache size 512
+java CacheSim oneRouter.txt hadoopKMeans 3 512
+^CTrace: hadoopKMeans; beginning 3 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopKMeans 3 1024
+^CTrace: hadoopKMeans; beginning 3 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopKMeans 3 2048
+^CTrace: hadoopKMeans; beginning 4 sim with cache size 1
+java CacheSim oneRouter.txt hadoopKMeans 4 1
+^CTrace: hadoopKMeans; beginning 4 sim with cache size 8
+java CacheSim oneRouter.txt hadoopKMeans 4 8
+^CTrace: hadoopKMeans; beginning 4 sim with cache size 16
+java CacheSim oneRouter.txt hadoopKMeans 4 16
+^CTrace: hadoopKMeans; beginning 4 sim with cache size 32
+java CacheSim oneRouter.txt hadoopKMeans 4 32
+^CTrace: hadoopKMeans; beginning 4 sim with cache size 64
+java CacheSim oneRouter.txt hadoopKMeans 4 64
+^CTrace: hadoopKMeans; beginning 4 sim with cache size 128
+java CacheSim oneRouter.txt hadoopKMeans 4 128
+^CTrace: hadoopKMeans; beginning 4 sim with cache size 256
+java CacheSim oneRouter.txt hadoopKMeans 4 256
+^CTrace: hadoopKMeans; beginning 4 sim with cache size 512
+java CacheSim oneRouter.txt hadoopKMeans 4 512
+^C^CTrace: hadoopKMeans; beginning 4 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopKMeans 4 1024
+^CTrace: hadoopKMeans; beginning 4 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopKMeans 4 2048
+^CTrace: hadoopKMeans; beginning 5 sim with cache size 1
+java CacheSim oneRouter.txt hadoopKMeans 5 1
+^CTrace: hadoopKMeans; beginning 5 sim with cache size 8
+java CacheSim oneRouter.txt hadoopKMeans 5 8
+^CTrace: hadoopKMeans; beginning 5 sim with cache size 16
+java CacheSim oneRouter.txt hadoopKMeans 5 16
+^CTrace: hadoopKMeans; beginning 5 sim with cache size 32
+java CacheSim oneRouter.txt hadoopKMeans 5 32
+^CTrace: hadoopKMeans; beginning 5 sim with cache size 64
+java CacheSim oneRouter.txt hadoopKMeans 5 64
+^CTrace: hadoopKMeans; beginning 5 sim with cache size 128
+java CacheSim oneRouter.txt hadoopKMeans 5 128
+^CTrace: hadoopKMeans; beginning 5 sim with cache size 256
+java CacheSim oneRouter.txt hadoopKMeans 5 256
+^CTrace: hadoopKMeans; beginning 5 sim with cache size 512
+java CacheSim oneRouter.txt hadoopKMeans 5 512
+^CTrace: hadoopKMeans; beginning 5 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopKMeans 5 1024
+^CTrace: hadoopKMeans; beginning 5 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopKMeans 5 2048
+^CTrace: hadoopKMeans; beginning 7 sim with cache size 1
+java CacheSim oneRouter.txt hadoopKMeans 7 1
+^CTrace: hadoopKMeans; beginning 7 sim with cache size 8
+java CacheSim oneRouter.txt hadoopKMeans 7 8
+^CTrace: hadoopKMeans; beginning 7 sim with cache size 16
+java CacheSim oneRouter.txt hadoopKMeans 7 16
+^CTrace: hadoopKMeans; beginning 7 sim with cache size 32
+java CacheSim oneRouter.txt hadoopKMeans 7 32
+^CTrace: hadoopKMeans; beginning 7 sim with cache size 64
+java CacheSim oneRouter.txt hadoopKMeans 7 64
+^CTrace: hadoopKMeans; beginning 7 sim with cache size 128
+java CacheSim oneRouter.txt hadoopKMeans 7 128
+^CTrace: hadoopKMeans; beginning 7 sim with cache size 256
+java CacheSim oneRouter.txt hadoopKMeans 7 256
+^CTrace: hadoopKMeans; beginning 7 sim with cache size 512
+java CacheSim oneRouter.txt hadoopKMeans 7 512
+^CTrace: hadoopKMeans; beginning 7 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopKMeans 7 1024
+^CTrace: hadoopKMeans; beginning 7 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopKMeans 7 2048
+^CTrace: hadoopKMeans; beginning 8 sim with cache size 1
+java CacheSim oneRouter.txt hadoopKMeans 8 1
+^CTrace: hadoopKMeans; beginning 8 sim with cache size 8
+java CacheSim oneRouter.txt hadoopKMeans 8 8
+^CTrace: hadoopKMeans; beginning 8 sim with cache size 16
+java CacheSim oneRouter.txt hadoopKMeans 8 16
+^CTrace: hadoopKMeans; beginning 8 sim with cache size 32
+java CacheSim oneRouter.txt hadoopKMeans 8 32
+^CTrace: hadoopKMeans; beginning 8 sim with cache size 64
+java CacheSim oneRouter.txt hadoopKMeans 8 64
+^CTrace: hadoopKMeans; beginning 8 sim with cache size 128
+java CacheSim oneRouter.txt hadoopKMeans 8 128
+^CTrace: hadoopKMeans; beginning 8 sim with cache size 256
+java CacheSim oneRouter.txt hadoopKMeans 8 256
+^CTrace: hadoopKMeans; beginning 8 sim with cache size 512
+java CacheSim oneRouter.txt hadoopKMeans 8 512
+^CTrace: hadoopKMeans; beginning 8 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopKMeans 8 1024
+^CTrace: hadoopKMeans; beginning 8 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopKMeans 8 2048
+^CTrace: hadoop-terasort-sort; beginning 1 sim with cache size 1
+java CacheSim oneRouter.txt hadoop-terasort-sort 1 1
+^CTrace: hadoop-terasort-sort; beginning 1 sim with cache size 8
+java CacheSim oneRouter.txt hadoop-terasort-sort 1 8
+^CTrace: hadoop-terasort-sort; beginning 1 sim with cache size 16
+java CacheSim oneRouter.txt hadoop-terasort-sort 1 16
+^CTrace: hadoop-terasort-sort; beginning 1 sim with cache size 32
+java CacheSim oneRouter.txt hadoop-terasort-sort 1 32
+^CTrace: hadoop-terasort-sort; beginning 1 sim with cache size 64
+java CacheSim oneRouter.txt hadoop-terasort-sort 1 64
+^CTrace: hadoop-terasort-sort; beginning 1 sim with cache size 128
+java CacheSim oneRouter.txt hadoop-terasort-sort 1 128
+^CTrace: hadoop-terasort-sort; beginning 1 sim with cache size 256
+java CacheSim oneRouter.txt hadoop-terasort-sort 1 256
+^CTrace: hadoop-terasort-sort; beginning 1 sim with cache size 512
+java CacheSim oneRouter.txt hadoop-terasort-sort 1 512
+^CTrace: hadoop-terasort-sort; beginning 1 sim with cache size 1024
+java CacheSim oneRouter.txt hadoop-terasort-sort 1 1024
+^CTrace: hadoop-terasort-sort; beginning 1 sim with cache size 2048
+java CacheSim oneRouter.txt hadoop-terasort-sort 1 2048
+^CTrace: hadoop-terasort-sort; beginning 3 sim with cache size 1
+java CacheSim oneRouter.txt hadoop-terasort-sort 3 1
+^CTrace: hadoop-terasort-sort; beginning 3 sim with cache size 8
+java CacheSim oneRouter.txt hadoop-terasort-sort 3 8
+^CTrace: hadoop-terasort-sort; beginning 3 sim with cache size 16
+java CacheSim oneRouter.txt hadoop-terasort-sort 3 16
+^CTrace: hadoop-terasort-sort; beginning 3 sim with cache size 32
+java CacheSim oneRouter.txt hadoop-terasort-sort 3 32
+^CTrace: hadoop-terasort-sort; beginning 3 sim with cache size 64
+java CacheSim oneRouter.txt hadoop-terasort-sort 3 64
+^CTrace: hadoop-terasort-sort; beginning 3 sim with cache size 128
+java CacheSim oneRouter.txt hadoop-terasort-sort 3 128
+^CTrace: hadoop-terasort-sort; beginning 3 sim with cache size 256
+java CacheSim oneRouter.txt hadoop-terasort-sort 3 256
+^CTrace: hadoop-terasort-sort; beginning 3 sim with cache size 512
+java CacheSim oneRouter.txt hadoop-terasort-sort 3 512
+^CTrace: hadoop-terasort-sort; beginning 3 sim with cache size 1024
+java CacheSim oneRouter.txt hadoop-terasort-sort 3 1024
+^CTrace: hadoop-terasort-sort; beginning 3 sim with cache size 2048
+java CacheSim oneRouter.txt hadoop-terasort-sort 3 2048
+^CTrace: hadoop-terasort-sort; beginning 4 sim with cache size 1
+java CacheSim oneRouter.txt hadoop-terasort-sort 4 1
+^CTrace: hadoop-terasort-sort; beginning 4 sim with cache size 8
+java CacheSim oneRouter.txt hadoop-terasort-sort 4 8
+^CTrace: hadoop-terasort-sort; beginning 4 sim with cache size 16
+java CacheSim oneRouter.txt hadoop-terasort-sort 4 16
+^CTrace: hadoop-terasort-sort; beginning 4 sim with cache size 32
+java CacheSim oneRouter.txt hadoop-terasort-sort 4 32
+^CTrace: hadoop-terasort-sort; beginning 4 sim with cache size 64
+java CacheSim oneRouter.txt hadoop-terasort-sort 4 64
+^CTrace: hadoop-terasort-sort; beginning 4 sim with cache size 128
+java CacheSim oneRouter.txt hadoop-terasort-sort 4 128
+^CTrace: hadoop-terasort-sort; beginning 4 sim with cache size 256
+java CacheSim oneRouter.txt hadoop-terasort-sort 4 256
+^CTrace: hadoop-terasort-sort; beginning 4 sim with cache size 512
+java CacheSim oneRouter.txt hadoop-terasort-sort 4 512
+^CTrace: hadoop-terasort-sort; beginning 4 sim with cache size 1024
+java CacheSim oneRouter.txt hadoop-terasort-sort 4 1024
+^CTrace: hadoop-terasort-sort; beginning 4 sim with cache size 2048
+java CacheSim oneRouter.txt hadoop-terasort-sort 4 2048
+^CTrace: hadoop-terasort-sort; beginning 5 sim with cache size 1
+java CacheSim oneRouter.txt hadoop-terasort-sort 5 1
+^CTrace: hadoop-terasort-sort; beginning 5 sim with cache size 8
+java CacheSim oneRouter.txt hadoop-terasort-sort 5 8
+^CTrace: hadoop-terasort-sort; beginning 5 sim with cache size 16
+java CacheSim oneRouter.txt hadoop-terasort-sort 5 16
+^CTrace: hadoop-terasort-sort; beginning 5 sim with cache size 32
+java CacheSim oneRouter.txt hadoop-terasort-sort 5 32
+^CTrace: hadoop-terasort-sort; beginning 5 sim with cache size 64
+java CacheSim oneRouter.txt hadoop-terasort-sort 5 64
+^CTrace: hadoop-terasort-sort; beginning 5 sim with cache size 128
+java CacheSim oneRouter.txt hadoop-terasort-sort 5 128
+^CTrace: hadoop-terasort-sort; beginning 5 sim with cache size 256
+java CacheSim oneRouter.txt hadoop-terasort-sort 5 256
+^CTrace: hadoop-terasort-sort; beginning 5 sim with cache size 512
+java CacheSim oneRouter.txt hadoop-terasort-sort 5 512
+^CTrace: hadoop-terasort-sort; beginning 5 sim with cache size 1024
+java CacheSim oneRouter.txt hadoop-terasort-sort 5 1024
+^CTrace: hadoop-terasort-sort; beginning 5 sim with cache size 2048
+java CacheSim oneRouter.txt hadoop-terasort-sort 5 2048
+^CTrace: hadoop-terasort-sort; beginning 7 sim with cache size 1
+java CacheSim oneRouter.txt hadoop-terasort-sort 7 1
+^CTrace: hadoop-terasort-sort; beginning 7 sim with cache size 8
+java CacheSim oneRouter.txt hadoop-terasort-sort 7 8
+^CTrace: hadoop-terasort-sort; beginning 7 sim with cache size 16
+java CacheSim oneRouter.txt hadoop-terasort-sort 7 16
+^CTrace: hadoop-terasort-sort; beginning 7 sim with cache size 32
+java CacheSim oneRouter.txt hadoop-terasort-sort 7 32
+^CTrace: hadoop-terasort-sort; beginning 7 sim with cache size 64
+java CacheSim oneRouter.txt hadoop-terasort-sort 7 64
+^CTrace: hadoop-terasort-sort; beginning 7 sim with cache size 128
+java CacheSim oneRouter.txt hadoop-terasort-sort 7 128
+^CTrace: hadoop-terasort-sort; beginning 7 sim with cache size 256
+java CacheSim oneRouter.txt hadoop-terasort-sort 7 256
+^CTrace: hadoop-terasort-sort; beginning 7 sim with cache size 512
+java CacheSim oneRouter.txt hadoop-terasort-sort 7 512
+^CTrace: hadoop-terasort-sort; beginning 7 sim with cache size 1024
+java CacheSim oneRouter.txt hadoop-terasort-sort 7 1024
+^C^CTrace: hadoop-terasort-sort; beginning 7 sim with cache size 2048
+java CacheSim oneRouter.txt hadoop-terasort-sort 7 2048
+^CTrace: hadoop-terasort-sort; beginning 8 sim with cache size 1
+java CacheSim oneRouter.txt hadoop-terasort-sort 8 1
+^CTrace: hadoop-terasort-sort; beginning 8 sim with cache size 8
+java CacheSim oneRouter.txt hadoop-terasort-sort 8 8
+^CTrace: hadoop-terasort-sort; beginning 8 sim with cache size 16
+java CacheSim oneRouter.txt hadoop-terasort-sort 8 16
+^CTrace: hadoop-terasort-sort; beginning 8 sim with cache size 32
+java CacheSim oneRouter.txt hadoop-terasort-sort 8 32
+^CTrace: hadoop-terasort-sort; beginning 8 sim with cache size 64
+java CacheSim oneRouter.txt hadoop-terasort-sort 8 64
+^CTrace: hadoop-terasort-sort; beginning 8 sim with cache size 128
+java CacheSim oneRouter.txt hadoop-terasort-sort 8 128
+^CTrace: hadoop-terasort-sort; beginning 8 sim with cache size 256
+java CacheSim oneRouter.txt hadoop-terasort-sort 8 256
+^CTrace: hadoop-terasort-sort; beginning 8 sim with cache size 512
+java CacheSim oneRouter.txt hadoop-terasort-sort 8 512
+^CTrace: hadoop-terasort-sort; beginning 8 sim with cache size 1024
+java CacheSim oneRouter.txt hadoop-terasort-sort 8 1024
+^CTrace: hadoop-terasort-sort; beginning 8 sim with cache size 2048
+java CacheSim oneRouter.txt hadoop-terasort-sort 8 2048
+^CTrace: hadoopWordCount-sort; beginning 1 sim with cache size 1
+java CacheSim oneRouter.txt hadoopWordCount-sort 1 1
+^CTrace: hadoopWordCount-sort; beginning 1 sim with cache size 8
+java CacheSim oneRouter.txt hadoopWordCount-sort 1 8
+^CTrace: hadoopWordCount-sort; beginning 1 sim with cache size 16
+java CacheSim oneRouter.txt hadoopWordCount-sort 1 16
+^CTrace: hadoopWordCount-sort; beginning 1 sim with cache size 32
+java CacheSim oneRouter.txt hadoopWordCount-sort 1 32
+^CTrace: hadoopWordCount-sort; beginning 1 sim with cache size 64
+java CacheSim oneRouter.txt hadoopWordCount-sort 1 64
+^CTrace: hadoopWordCount-sort; beginning 1 sim with cache size 128
+java CacheSim oneRouter.txt hadoopWordCount-sort 1 128
+^CTrace: hadoopWordCount-sort; beginning 1 sim with cache size 256
+java CacheSim oneRouter.txt hadoopWordCount-sort 1 256
+^CTrace: hadoopWordCount-sort; beginning 1 sim with cache size 512
+java CacheSim oneRouter.txt hadoopWordCount-sort 1 512
+^CTrace: hadoopWordCount-sort; beginning 1 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopWordCount-sort 1 1024
+^CTrace: hadoopWordCount-sort; beginning 1 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopWordCount-sort 1 2048
+^CTrace: hadoopWordCount-sort; beginning 3 sim with cache size 1
+java CacheSim oneRouter.txt hadoopWordCount-sort 3 1
+^CTrace: hadoopWordCount-sort; beginning 3 sim with cache size 8
+java CacheSim oneRouter.txt hadoopWordCount-sort 3 8
+^CTrace: hadoopWordCount-sort; beginning 3 sim with cache size 16
+java CacheSim oneRouter.txt hadoopWordCount-sort 3 16
+^CTrace: hadoopWordCount-sort; beginning 3 sim with cache size 32
+java CacheSim oneRouter.txt hadoopWordCount-sort 3 32
+^CTrace: hadoopWordCount-sort; beginning 3 sim with cache size 64
+java CacheSim oneRouter.txt hadoopWordCount-sort 3 64
+^CTrace: hadoopWordCount-sort; beginning 3 sim with cache size 128
+java CacheSim oneRouter.txt hadoopWordCount-sort 3 128
+^CTrace: hadoopWordCount-sort; beginning 3 sim with cache size 256
+java CacheSim oneRouter.txt hadoopWordCount-sort 3 256
+^CTrace: hadoopWordCount-sort; beginning 3 sim with cache size 512
+java CacheSim oneRouter.txt hadoopWordCount-sort 3 512
+^CTrace: hadoopWordCount-sort; beginning 3 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopWordCount-sort 3 1024
+^CTrace: hadoopWordCount-sort; beginning 3 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopWordCount-sort 3 2048
+^CTrace: hadoopWordCount-sort; beginning 4 sim with cache size 1
+java CacheSim oneRouter.txt hadoopWordCount-sort 4 1
+^CTrace: hadoopWordCount-sort; beginning 4 sim with cache size 8
+java CacheSim oneRouter.txt hadoopWordCount-sort 4 8
+^CTrace: hadoopWordCount-sort; beginning 4 sim with cache size 16
+java CacheSim oneRouter.txt hadoopWordCount-sort 4 16
+^CTrace: hadoopWordCount-sort; beginning 4 sim with cache size 32
+java CacheSim oneRouter.txt hadoopWordCount-sort 4 32
+^CTrace: hadoopWordCount-sort; beginning 4 sim with cache size 64
+java CacheSim oneRouter.txt hadoopWordCount-sort 4 64
+^CTrace: hadoopWordCount-sort; beginning 4 sim with cache size 128
+java CacheSim oneRouter.txt hadoopWordCount-sort 4 128
+^CTrace: hadoopWordCount-sort; beginning 4 sim with cache size 256
+java CacheSim oneRouter.txt hadoopWordCount-sort 4 256
+^CTrace: hadoopWordCount-sort; beginning 4 sim with cache size 512
+java CacheSim oneRouter.txt hadoopWordCount-sort 4 512
+^CTrace: hadoopWordCount-sort; beginning 4 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopWordCount-sort 4 1024
+^CTrace: hadoopWordCount-sort; beginning 4 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopWordCount-sort 4 2048
+^CTrace: hadoopWordCount-sort; beginning 5 sim with cache size 1
+java CacheSim oneRouter.txt hadoopWordCount-sort 5 1
+^CTrace: hadoopWordCount-sort; beginning 5 sim with cache size 8
+java CacheSim oneRouter.txt hadoopWordCount-sort 5 8
+^CTrace: hadoopWordCount-sort; beginning 5 sim with cache size 16
+java CacheSim oneRouter.txt hadoopWordCount-sort 5 16
+^CTrace: hadoopWordCount-sort; beginning 5 sim with cache size 32
+java CacheSim oneRouter.txt hadoopWordCount-sort 5 32
+^CTrace: hadoopWordCount-sort; beginning 5 sim with cache size 64
+java CacheSim oneRouter.txt hadoopWordCount-sort 5 64
+^CTrace: hadoopWordCount-sort; beginning 5 sim with cache size 128
+java CacheSim oneRouter.txt hadoopWordCount-sort 5 128
+^CTrace: hadoopWordCount-sort; beginning 5 sim with cache size 256
+java CacheSim oneRouter.txt hadoopWordCount-sort 5 256
+^CTrace: hadoopWordCount-sort; beginning 5 sim with cache size 512
+java CacheSim oneRouter.txt hadoopWordCount-sort 5 512
+^CTrace: hadoopWordCount-sort; beginning 5 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopWordCount-sort 5 1024
+^CTrace: hadoopWordCount-sort; beginning 5 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopWordCount-sort 5 2048
+^CTrace: hadoopWordCount-sort; beginning 7 sim with cache size 1
+java CacheSim oneRouter.txt hadoopWordCount-sort 7 1
+^CTrace: hadoopWordCount-sort; beginning 7 sim with cache size 8
+java CacheSim oneRouter.txt hadoopWordCount-sort 7 8
+^CTrace: hadoopWordCount-sort; beginning 7 sim with cache size 16
+java CacheSim oneRouter.txt hadoopWordCount-sort 7 16
+^CTrace: hadoopWordCount-sort; beginning 7 sim with cache size 32
+java CacheSim oneRouter.txt hadoopWordCount-sort 7 32
+^CTrace: hadoopWordCount-sort; beginning 7 sim with cache size 64
+java CacheSim oneRouter.txt hadoopWordCount-sort 7 64
+^CTrace: hadoopWordCount-sort; beginning 7 sim with cache size 128
+java CacheSim oneRouter.txt hadoopWordCount-sort 7 128
+^CTrace: hadoopWordCount-sort; beginning 7 sim with cache size 256
+java CacheSim oneRouter.txt hadoopWordCount-sort 7 256
+^CTrace: hadoopWordCount-sort; beginning 7 sim with cache size 512
+java CacheSim oneRouter.txt hadoopWordCount-sort 7 512
+^CTrace: hadoopWordCount-sort; beginning 7 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopWordCount-sort 7 1024
+^CTrace: hadoopWordCount-sort; beginning 7 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopWordCount-sort 7 2048
+^CTrace: hadoopWordCount-sort; beginning 8 sim with cache size 1
+java CacheSim oneRouter.txt hadoopWordCount-sort 8 1
+^CTrace: hadoopWordCount-sort; beginning 8 sim with cache size 8
+java CacheSim oneRouter.txt hadoopWordCount-sort 8 8
+^CTrace: hadoopWordCount-sort; beginning 8 sim with cache size 16
+java CacheSim oneRouter.txt hadoopWordCount-sort 8 16
+^CTrace: hadoopWordCount-sort; beginning 8 sim with cache size 32
+java CacheSim oneRouter.txt hadoopWordCount-sort 8 32
+^CTrace: hadoopWordCount-sort; beginning 8 sim with cache size 64
+java CacheSim oneRouter.txt hadoopWordCount-sort 8 64
+^CTrace: hadoopWordCount-sort; beginning 8 sim with cache size 128
+java CacheSim oneRouter.txt hadoopWordCount-sort 8 128
+^CTrace: hadoopWordCount-sort; beginning 8 sim with cache size 256
+java CacheSim oneRouter.txt hadoopWordCount-sort 8 256
+^CTrace: hadoopWordCount-sort; beginning 8 sim with cache size 512
+java CacheSim oneRouter.txt hadoopWordCount-sort 8 512
+^CTrace: hadoopWordCount-sort; beginning 8 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopWordCount-sort 8 1024
+^CTrace: hadoopWordCount-sort; beginning 8 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopWordCount-sort 8 2048
+^CTrace: hadoopDfsio; beginning 1 sim with cache size 1
+java CacheSim oneRouter.txt hadoopDfsio 1 1
+^CTrace: hadoopDfsio; beginning 1 sim with cache size 8
+java CacheSim oneRouter.txt hadoopDfsio 1 8
+^CTrace: hadoopDfsio; beginning 1 sim with cache size 16
+java CacheSim oneRouter.txt hadoopDfsio 1 16
+^CTrace: hadoopDfsio; beginning 1 sim with cache size 32
+java CacheSim oneRouter.txt hadoopDfsio 1 32
+^CTrace: hadoopDfsio; beginning 1 sim with cache size 64
+java CacheSim oneRouter.txt hadoopDfsio 1 64
+^CTrace: hadoopDfsio; beginning 1 sim with cache size 128
+java CacheSim oneRouter.txt hadoopDfsio 1 128
+^CTrace: hadoopDfsio; beginning 1 sim with cache size 256
+java CacheSim oneRouter.txt hadoopDfsio 1 256
+^CTrace: hadoopDfsio; beginning 1 sim with cache size 512
+java CacheSim oneRouter.txt hadoopDfsio 1 512
+^CTrace: hadoopDfsio; beginning 1 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopDfsio 1 1024
+^CTrace: hadoopDfsio; beginning 1 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopDfsio 1 2048
+^CTrace: hadoopDfsio; beginning 3 sim with cache size 1
+java CacheSim oneRouter.txt hadoopDfsio 3 1
+^CTrace: hadoopDfsio; beginning 3 sim with cache size 8
+java CacheSim oneRouter.txt hadoopDfsio 3 8
+^CTrace: hadoopDfsio; beginning 3 sim with cache size 16
+java CacheSim oneRouter.txt hadoopDfsio 3 16
+^CTrace: hadoopDfsio; beginning 3 sim with cache size 32
+java CacheSim oneRouter.txt hadoopDfsio 3 32
+^CTrace: hadoopDfsio; beginning 3 sim with cache size 64
+java CacheSim oneRouter.txt hadoopDfsio 3 64
+^CTrace: hadoopDfsio; beginning 3 sim with cache size 128
+java CacheSim oneRouter.txt hadoopDfsio 3 128
+^CTrace: hadoopDfsio; beginning 3 sim with cache size 256
+java CacheSim oneRouter.txt hadoopDfsio 3 256
+^CTrace: hadoopDfsio; beginning 3 sim with cache size 512
+java CacheSim oneRouter.txt hadoopDfsio 3 512
+^CTrace: hadoopDfsio; beginning 3 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopDfsio 3 1024
+^CTrace: hadoopDfsio; beginning 3 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopDfsio 3 2048
+^CTrace: hadoopDfsio; beginning 4 sim with cache size 1
+java CacheSim oneRouter.txt hadoopDfsio 4 1
+^CTrace: hadoopDfsio; beginning 4 sim with cache size 8
+java CacheSim oneRouter.txt hadoopDfsio 4 8
+^CTrace: hadoopDfsio; beginning 4 sim with cache size 16
+java CacheSim oneRouter.txt hadoopDfsio 4 16
+^CTrace: hadoopDfsio; beginning 4 sim with cache size 32
+java CacheSim oneRouter.txt hadoopDfsio 4 32
+^CTrace: hadoopDfsio; beginning 4 sim with cache size 64
+java CacheSim oneRouter.txt hadoopDfsio 4 64
+^CTrace: hadoopDfsio; beginning 4 sim with cache size 128
+java CacheSim oneRouter.txt hadoopDfsio 4 128
+^CTrace: hadoopDfsio; beginning 4 sim with cache size 256
+java CacheSim oneRouter.txt hadoopDfsio 4 256
+^CTrace: hadoopDfsio; beginning 4 sim with cache size 512
+java CacheSim oneRouter.txt hadoopDfsio 4 512
+^CTrace: hadoopDfsio; beginning 4 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopDfsio 4 1024
+^CTrace: hadoopDfsio; beginning 4 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopDfsio 4 2048
+^C^CTrace: hadoopDfsio; beginning 5 sim with cache size 1
+java CacheSim oneRouter.txt hadoopDfsio 5 1
+^CTrace: hadoopDfsio; beginning 5 sim with cache size 8
+java CacheSim oneRouter.txt hadoopDfsio 5 8
+^CTrace: hadoopDfsio; beginning 5 sim with cache size 16
+java CacheSim oneRouter.txt hadoopDfsio 5 16
+^CTrace: hadoopDfsio; beginning 5 sim with cache size 32
+java CacheSim oneRouter.txt hadoopDfsio 5 32
+^CTrace: hadoopDfsio; beginning 5 sim with cache size 64
+java CacheSim oneRouter.txt hadoopDfsio 5 64
+^CTrace: hadoopDfsio; beginning 5 sim with cache size 128
+java CacheSim oneRouter.txt hadoopDfsio 5 128
+^CTrace: hadoopDfsio; beginning 5 sim with cache size 256
+java CacheSim oneRouter.txt hadoopDfsio 5 256
+^CTrace: hadoopDfsio; beginning 5 sim with cache size 512
+java CacheSim oneRouter.txt hadoopDfsio 5 512
+^CTrace: hadoopDfsio; beginning 5 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopDfsio 5 1024
+^CTrace: hadoopDfsio; beginning 5 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopDfsio 5 2048
+^CTrace: hadoopDfsio; beginning 7 sim with cache size 1
+java CacheSim oneRouter.txt hadoopDfsio 7 1
+^CTrace: hadoopDfsio; beginning 7 sim with cache size 8
+java CacheSim oneRouter.txt hadoopDfsio 7 8
+^CTrace: hadoopDfsio; beginning 7 sim with cache size 16
+java CacheSim oneRouter.txt hadoopDfsio 7 16
+^CTrace: hadoopDfsio; beginning 7 sim with cache size 32
+java CacheSim oneRouter.txt hadoopDfsio 7 32
+^CTrace: hadoopDfsio; beginning 7 sim with cache size 64
+java CacheSim oneRouter.txt hadoopDfsio 7 64
+^CTrace: hadoopDfsio; beginning 7 sim with cache size 128
+java CacheSim oneRouter.txt hadoopDfsio 7 128
+^CTrace: hadoopDfsio; beginning 7 sim with cache size 256
+java CacheSim oneRouter.txt hadoopDfsio 7 256
+^CTrace: hadoopDfsio; beginning 7 sim with cache size 512
+java CacheSim oneRouter.txt hadoopDfsio 7 512
+^CTrace: hadoopDfsio; beginning 7 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopDfsio 7 1024
+^CTrace: hadoopDfsio; beginning 7 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopDfsio 7 2048
+^CTrace: hadoopDfsio; beginning 8 sim with cache size 1
+java CacheSim oneRouter.txt hadoopDfsio 8 1
+^CTrace: hadoopDfsio; beginning 8 sim with cache size 8
+java CacheSim oneRouter.txt hadoopDfsio 8 8
+^CTrace: hadoopDfsio; beginning 8 sim with cache size 16
+java CacheSim oneRouter.txt hadoopDfsio 8 16
+^CTrace: hadoopDfsio; beginning 8 sim with cache size 32
+java CacheSim oneRouter.txt hadoopDfsio 8 32
+^CTrace: hadoopDfsio; beginning 8 sim with cache size 64
+java CacheSim oneRouter.txt hadoopDfsio 8 64
+^CTrace: hadoopDfsio; beginning 8 sim with cache size 128
+java CacheSim oneRouter.txt hadoopDfsio 8 128
+^CTrace: hadoopDfsio; beginning 8 sim with cache size 256
+java CacheSim oneRouter.txt hadoopDfsio 8 256
+^CTrace: hadoopDfsio; beginning 8 sim with cache size 512
+java CacheSim oneRouter.txt hadoopDfsio 8 512
+^CTrace: hadoopDfsio; beginning 8 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopDfsio 8 1024
+^CTrace: hadoopDfsio; beginning 8 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopDfsio 8 2048
+^CTrace: hadoopPageRank; beginning 1 sim with cache size 1
+java CacheSim oneRouter.txt hadoopPageRank 1 1
+^CTrace: hadoopPageRank; beginning 1 sim with cache size 8
+java CacheSim oneRouter.txt hadoopPageRank 1 8
+^CTrace: hadoopPageRank; beginning 1 sim with cache size 16
+java CacheSim oneRouter.txt hadoopPageRank 1 16
+^CTrace: hadoopPageRank; beginning 1 sim with cache size 32
+java CacheSim oneRouter.txt hadoopPageRank 1 32
+^CTrace: hadoopPageRank; beginning 1 sim with cache size 64
+java CacheSim oneRouter.txt hadoopPageRank 1 64
+^CTrace: hadoopPageRank; beginning 1 sim with cache size 128
+java CacheSim oneRouter.txt hadoopPageRank 1 128
+^CTrace: hadoopPageRank; beginning 1 sim with cache size 256
+java CacheSim oneRouter.txt hadoopPageRank 1 256
+^CTrace: hadoopPageRank; beginning 1 sim with cache size 512
+java CacheSim oneRouter.txt hadoopPageRank 1 512
+^CTrace: hadoopPageRank; beginning 1 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopPageRank 1 1024
+^CTrace: hadoopPageRank; beginning 1 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopPageRank 1 2048
+^CTrace: hadoopPageRank; beginning 3 sim with cache size 1
+java CacheSim oneRouter.txt hadoopPageRank 3 1
+^CTrace: hadoopPageRank; beginning 3 sim with cache size 8
+java CacheSim oneRouter.txt hadoopPageRank 3 8
+^CTrace: hadoopPageRank; beginning 3 sim with cache size 16
+java CacheSim oneRouter.txt hadoopPageRank 3 16
+^CTrace: hadoopPageRank; beginning 3 sim with cache size 32
+java CacheSim oneRouter.txt hadoopPageRank 3 32
+^CTrace: hadoopPageRank; beginning 3 sim with cache size 64
+java CacheSim oneRouter.txt hadoopPageRank 3 64
+^CTrace: hadoopPageRank; beginning 3 sim with cache size 128
+java CacheSim oneRouter.txt hadoopPageRank 3 128
+^CTrace: hadoopPageRank; beginning 3 sim with cache size 256
+java CacheSim oneRouter.txt hadoopPageRank 3 256
+^CTrace: hadoopPageRank; beginning 3 sim with cache size 512
+java CacheSim oneRouter.txt hadoopPageRank 3 512
+^CTrace: hadoopPageRank; beginning 3 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopPageRank 3 1024
+^CTrace: hadoopPageRank; beginning 3 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopPageRank 3 2048
+^CTrace: hadoopPageRank; beginning 4 sim with cache size 1
+java CacheSim oneRouter.txt hadoopPageRank 4 1
+^CTrace: hadoopPageRank; beginning 4 sim with cache size 8
+java CacheSim oneRouter.txt hadoopPageRank 4 8
+^CTrace: hadoopPageRank; beginning 4 sim with cache size 16
+java CacheSim oneRouter.txt hadoopPageRank 4 16
+^CTrace: hadoopPageRank; beginning 4 sim with cache size 32
+java CacheSim oneRouter.txt hadoopPageRank 4 32
+^CTrace: hadoopPageRank; beginning 4 sim with cache size 64
+java CacheSim oneRouter.txt hadoopPageRank 4 64
+^CTrace: hadoopPageRank; beginning 4 sim with cache size 128
+java CacheSim oneRouter.txt hadoopPageRank 4 128
+^CTrace: hadoopPageRank; beginning 4 sim with cache size 256
+java CacheSim oneRouter.txt hadoopPageRank 4 256
+^C^CTrace: hadoopPageRank; beginning 4 sim with cache size 512
+java CacheSim oneRouter.txt hadoopPageRank 4 512
+^CTrace: hadoopPageRank; beginning 4 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopPageRank 4 1024
+^CTrace: hadoopPageRank; beginning 4 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopPageRank 4 2048
+^CTrace: hadoopPageRank; beginning 5 sim with cache size 1
+java CacheSim oneRouter.txt hadoopPageRank 5 1
+^CTrace: hadoopPageRank; beginning 5 sim with cache size 8
+java CacheSim oneRouter.txt hadoopPageRank 5 8
+^CTrace: hadoopPageRank; beginning 5 sim with cache size 16
+java CacheSim oneRouter.txt hadoopPageRank 5 16
+^CTrace: hadoopPageRank; beginning 5 sim with cache size 32
+java CacheSim oneRouter.txt hadoopPageRank 5 32
+^CTrace: hadoopPageRank; beginning 5 sim with cache size 64
+java CacheSim oneRouter.txt hadoopPageRank 5 64
+^CTrace: hadoopPageRank; beginning 5 sim with cache size 128
+java CacheSim oneRouter.txt hadoopPageRank 5 128
+^CTrace: hadoopPageRank; beginning 5 sim with cache size 256
+java CacheSim oneRouter.txt hadoopPageRank 5 256
+^CTrace: hadoopPageRank; beginning 5 sim with cache size 512
+java CacheSim oneRouter.txt hadoopPageRank 5 512
+^CTrace: hadoopPageRank; beginning 5 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopPageRank 5 1024
+^CTrace: hadoopPageRank; beginning 5 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopPageRank 5 2048
+^CTrace: hadoopPageRank; beginning 7 sim with cache size 1
+java CacheSim oneRouter.txt hadoopPageRank 7 1
+^CTrace: hadoopPageRank; beginning 7 sim with cache size 8
+java CacheSim oneRouter.txt hadoopPageRank 7 8
+^CTrace: hadoopPageRank; beginning 7 sim with cache size 16
+java CacheSim oneRouter.txt hadoopPageRank 7 16
+^CTrace: hadoopPageRank; beginning 7 sim with cache size 32
+java CacheSim oneRouter.txt hadoopPageRank 7 32
+^CTrace: hadoopPageRank; beginning 7 sim with cache size 64
+java CacheSim oneRouter.txt hadoopPageRank 7 64
+^CTrace: hadoopPageRank; beginning 7 sim with cache size 128
+java CacheSim oneRouter.txt hadoopPageRank 7 128
+^CTrace: hadoopPageRank; beginning 7 sim with cache size 256
+java CacheSim oneRouter.txt hadoopPageRank 7 256
+^CTrace: hadoopPageRank; beginning 7 sim with cache size 512
+java CacheSim oneRouter.txt hadoopPageRank 7 512
+^CTrace: hadoopPageRank; beginning 7 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopPageRank 7 1024
+^CTrace: hadoopPageRank; beginning 7 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopPageRank 7 2048
+^CTrace: hadoopPageRank; beginning 8 sim with cache size 1
+java CacheSim oneRouter.txt hadoopPageRank 8 1
+^CTrace: hadoopPageRank; beginning 8 sim with cache size 8
+java CacheSim oneRouter.txt hadoopPageRank 8 8
+^CTrace: hadoopPageRank; beginning 8 sim with cache size 16
+java CacheSim oneRouter.txt hadoopPageRank 8 16
+^CTrace: hadoopPageRank; beginning 8 sim with cache size 32
+java CacheSim oneRouter.txt hadoopPageRank 8 32
+^CTrace: hadoopPageRank; beginning 8 sim with cache size 64
+java CacheSim oneRouter.txt hadoopPageRank 8 64
+^CTrace: hadoopPageRank; beginning 8 sim with cache size 128
+java CacheSim oneRouter.txt hadoopPageRank 8 128
+^CTrace: hadoopPageRank; beginning 8 sim with cache size 256
+java CacheSim oneRouter.txt hadoopPageRank 8 256
+^CTrace: hadoopPageRank; beginning 8 sim with cache size 512
+java CacheSim oneRouter.txt hadoopPageRank 8 512
+^CTrace: hadoopPageRank; beginning 8 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopPageRank 8 1024
+^CTrace: hadoopPageRank; beginning 8 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopPageRank 8 2048
+^CTrace: hadoopSort; beginning 1 sim with cache size 1
+java CacheSim oneRouter.txt hadoopSort 1 1
+^CTrace: hadoopSort; beginning 1 sim with cache size 8
+java CacheSim oneRouter.txt hadoopSort 1 8
+^CTrace: hadoopSort; beginning 1 sim with cache size 16
+java CacheSim oneRouter.txt hadoopSort 1 16
+^CTrace: hadoopSort; beginning 1 sim with cache size 32
+java CacheSim oneRouter.txt hadoopSort 1 32
+^CTrace: hadoopSort; beginning 1 sim with cache size 64
+java CacheSim oneRouter.txt hadoopSort 1 64
+^CTrace: hadoopSort; beginning 1 sim with cache size 128
+java CacheSim oneRouter.txt hadoopSort 1 128
+^CTrace: hadoopSort; beginning 1 sim with cache size 256
+java CacheSim oneRouter.txt hadoopSort 1 256
+^CTrace: hadoopSort; beginning 1 sim with cache size 512
+java CacheSim oneRouter.txt hadoopSort 1 512
+^CTrace: hadoopSort; beginning 1 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopSort 1 1024
+^CTrace: hadoopSort; beginning 1 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopSort 1 2048
+^CTrace: hadoopSort; beginning 3 sim with cache size 1
+java CacheSim oneRouter.txt hadoopSort 3 1
+^CTrace: hadoopSort; beginning 3 sim with cache size 8
+java CacheSim oneRouter.txt hadoopSort 3 8
+^CTrace: hadoopSort; beginning 3 sim with cache size 16
+java CacheSim oneRouter.txt hadoopSort 3 16
+^CTrace: hadoopSort; beginning 3 sim with cache size 32
+java CacheSim oneRouter.txt hadoopSort 3 32
+^CTrace: hadoopSort; beginning 3 sim with cache size 64
+java CacheSim oneRouter.txt hadoopSort 3 64
+^CTrace: hadoopSort; beginning 3 sim with cache size 128
+java CacheSim oneRouter.txt hadoopSort 3 128
+^CTrace: hadoopSort; beginning 3 sim with cache size 256
+java CacheSim oneRouter.txt hadoopSort 3 256
+^CTrace: hadoopSort; beginning 3 sim with cache size 512
+java CacheSim oneRouter.txt hadoopSort 3 512
+^CTrace: hadoopSort; beginning 3 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopSort 3 1024
+^CTrace: hadoopSort; beginning 3 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopSort 3 2048
+^CTrace: hadoopSort; beginning 4 sim with cache size 1
+java CacheSim oneRouter.txt hadoopSort 4 1
+^CTrace: hadoopSort; beginning 4 sim with cache size 8
+java CacheSim oneRouter.txt hadoopSort 4 8
+^CTrace: hadoopSort; beginning 4 sim with cache size 16
+java CacheSim oneRouter.txt hadoopSort 4 16
+^CTrace: hadoopSort; beginning 4 sim with cache size 32
+java CacheSim oneRouter.txt hadoopSort 4 32
+^CTrace: hadoopSort; beginning 4 sim with cache size 64
+java CacheSim oneRouter.txt hadoopSort 4 64
+^CTrace: hadoopSort; beginning 4 sim with cache size 128
+java CacheSim oneRouter.txt hadoopSort 4 128
+^CTrace: hadoopSort; beginning 4 sim with cache size 256
+java CacheSim oneRouter.txt hadoopSort 4 256
+^CTrace: hadoopSort; beginning 4 sim with cache size 512
+java CacheSim oneRouter.txt hadoopSort 4 512
+^CTrace: hadoopSort; beginning 4 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopSort 4 1024
+^CTrace: hadoopSort; beginning 4 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopSort 4 2048
+^CTrace: hadoopSort; beginning 5 sim with cache size 1
+java CacheSim oneRouter.txt hadoopSort 5 1
+^CTrace: hadoopSort; beginning 5 sim with cache size 8
+java CacheSim oneRouter.txt hadoopSort 5 8
+^CTrace: hadoopSort; beginning 5 sim with cache size 16
+java CacheSim oneRouter.txt hadoopSort 5 16
+^CTrace: hadoopSort; beginning 5 sim with cache size 32
+java CacheSim oneRouter.txt hadoopSort 5 32
+^CTrace: hadoopSort; beginning 5 sim with cache size 64
+java CacheSim oneRouter.txt hadoopSort 5 64
+^CTrace: hadoopSort; beginning 5 sim with cache size 128
+java CacheSim oneRouter.txt hadoopSort 5 128
+^CTrace: hadoopSort; beginning 5 sim with cache size 256
+java CacheSim oneRouter.txt hadoopSort 5 256
+^CTrace: hadoopSort; beginning 5 sim with cache size 512
+java CacheSim oneRouter.txt hadoopSort 5 512
+^CTrace: hadoopSort; beginning 5 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopSort 5 1024
+^CTrace: hadoopSort; beginning 5 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopSort 5 2048
+^CTrace: hadoopSort; beginning 7 sim with cache size 1
+java CacheSim oneRouter.txt hadoopSort 7 1
+^CTrace: hadoopSort; beginning 7 sim with cache size 8
+java CacheSim oneRouter.txt hadoopSort 7 8
+^CTrace: hadoopSort; beginning 7 sim with cache size 16
+java CacheSim oneRouter.txt hadoopSort 7 16
+^CTrace: hadoopSort; beginning 7 sim with cache size 32
+java CacheSim oneRouter.txt hadoopSort 7 32
+^CTrace: hadoopSort; beginning 7 sim with cache size 64
+java CacheSim oneRouter.txt hadoopSort 7 64
+^CTrace: hadoopSort; beginning 7 sim with cache size 128
+java CacheSim oneRouter.txt hadoopSort 7 128
+^CTrace: hadoopSort; beginning 7 sim with cache size 256
+java CacheSim oneRouter.txt hadoopSort 7 256
+^CTrace: hadoopSort; beginning 7 sim with cache size 512
+java CacheSim oneRouter.txt hadoopSort 7 512
+^CTrace: hadoopSort; beginning 7 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopSort 7 1024
+^CTrace: hadoopSort; beginning 7 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopSort 7 2048
+^CTrace: hadoopSort; beginning 8 sim with cache size 1
+java CacheSim oneRouter.txt hadoopSort 8 1
+^CTrace: hadoopSort; beginning 8 sim with cache size 8
+java CacheSim oneRouter.txt hadoopSort 8 8
+^CTrace: hadoopSort; beginning 8 sim with cache size 16
+java CacheSim oneRouter.txt hadoopSort 8 16
+^CTrace: hadoopSort; beginning 8 sim with cache size 32
+java CacheSim oneRouter.txt hadoopSort 8 32
+^CTrace: hadoopSort; beginning 8 sim with cache size 64
+java CacheSim oneRouter.txt hadoopSort 8 64
+^CTrace: hadoopSort; beginning 8 sim with cache size 128
+java CacheSim oneRouter.txt hadoopSort 8 128
+^CTrace: hadoopSort; beginning 8 sim with cache size 256
+java CacheSim oneRouter.txt hadoopSort 8 256
+^CTrace: hadoopSort; beginning 8 sim with cache size 512
+java CacheSim oneRouter.txt hadoopSort 8 512
+^CTrace: hadoopSort; beginning 8 sim with cache size 1024
+java CacheSim oneRouter.txt hadoopSort 8 1024
+^CTrace: hadoopSort; beginning 8 sim with cache size 2048
+java CacheSim oneRouter.txt hadoopSort 8 2048
+^Cnavdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ ^C
+navdeep@italic:~/Documents/simulator/src$ c[Kexit
+
+Script done on Tue 24 Jan 2017 02:11:56 PM MST
