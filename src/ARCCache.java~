@@ -32,7 +32,7 @@ public final class ARCCache {
 	}
 
 	public void accessCache(Block block) {
-		for (int i = 0; i < Math.ceil((double)block.size / (double)CacheSim.CACHE_BLOCK_SIZE); i++) {
+		/*for (int i = 0; i < Math.ceil((double)block.size / (double)CacheSim.CACHE_BLOCK_SIZE); i++) {
 			long internalId = ((int) block.blockId) + ((int) i) * 100000000000L;
 			int internalSize = CacheSim.CACHE_BLOCK_SIZE;
 			if ((i + 1) * CacheSim.CACHE_BLOCK_SIZE > block.size) {
@@ -44,7 +44,8 @@ public final class ARCCache {
 				customInsert(internalId, internalSize, block);
 				break;
 			}
-		}
+		}*/
+	customInsert(block.blockId, block.size, block);
 	}
 
 	public void customInsert(long id, int internalSize, Block block) {

@@ -14,7 +14,7 @@ public class LRUCache extends LinkedHashMap {
 	private long hashmapSize;
 
 	public LRUCache(int cacheSize) {
-		super(1024, (float) 0.75, true);
+		super(cacheSize, (float) 0.75, true);
 		this.cacheSize = cacheSize;
 	}
 
@@ -26,7 +26,8 @@ public class LRUCache extends LinkedHashMap {
                		countOfSize += (int) pair.getValue();
 		}
 		return countOfSize >= cacheSize;
-	}	
+	}
+	
 	public void accessCache(Block block) {
 			/*for (int i = 0; i < Math.ceil((double)block.size / (double)CacheSim.CACHE_BLOCK_SIZE); i++) {
 				long internalId = ((int) block.blockId) + ((int) i) * 100000000000L;
@@ -42,10 +43,10 @@ public class LRUCache extends LinkedHashMap {
 
 	private void customInsert(long id, int internalSize, Block block) {
 		if (remove(id)!= null) {
-			if (block.blockOperation == CacheSim.OPERATION_READ) {
+			//if (block.blockOperation == CacheSim.OPERATION_READ) {
 				totalHits++;
 				totalHitsSize += internalSize;
-			}
+			//}
 		}
 		
 		put(id, internalSize);
@@ -64,5 +65,4 @@ public class LRUCache extends LinkedHashMap {
 		System.out.println(totalAccesses+","+totalHits+","+((double)totalHits)/((double)totalAccesses)+","+totalSize+","+totalHitsSize+","+((double)totalHitsSize)/((double)totalSize));
 		
 	}
-	
 }
