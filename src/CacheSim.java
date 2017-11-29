@@ -12,25 +12,27 @@ public class CacheSim {
 	public final static int OPERATION_REMOVE = 2;
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		int blockOperation;
 		int blockId;
 		int size;
 		int src;
 		int dest;
+                int numRouters = 1;
 		
 		//Queue<Block> cache = new Queue<Block>();
 		Block b;
 		
 
-		int input = Integer.parseInt(args[3]);
-		int CACHE_MAX_BLOCKS = input*1024*1024;
+		int CACHE_MAX_MBLOCKS = Integer.parseInt(args[3]);
 
 		
 		In topology = new In(args[0]);
-        Graph G = new Graph(topology, CACHE_MAX_BLOCKS);
+        Graph G = new Graph(topology, CACHE_MAX_MBLOCKS);
 		In inLogFile = new In(args[1]);
 		int policyName = Integer.parseInt(args[2]);
+                if (args.length == 7) {
+                  numRouters = Integer.parseInt(args[6]);
+                }
 		
 		int k = 0;
 		int[] lookupTable = new int[128];
@@ -87,7 +89,7 @@ public class CacheSim {
 						block.src = list.get(1);
 						G.cache.get(list.get(1)).enqueue(block);
 					}
-					if(i<1){
+					if(i<numRouters){
 					switch(policyName){
 						case 1: 
 							G.returnVertex(i).getLRU().accessCache(block);

@@ -1,8 +1,8 @@
 .PHONY: all clean
 
 all: clean
-	mkdir bin
-	javac -classpath src -d bin src/CacheSim.java
+	mkdir build
+	javac -classpath src -d build src/CacheSim.java
 
 clean:
-	rm -rf bin *.class
+	rm -rf build *.class

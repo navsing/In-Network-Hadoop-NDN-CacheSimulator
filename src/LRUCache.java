@@ -19,13 +19,13 @@ public class LRUCache extends LinkedHashMap {
 	}
 
 	protected boolean removeEldestEntry(Map.Entry eldest) {
-		int countOfSize = 0;
+		long countOfSize = 0;
 		Iterator it = entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();
                		countOfSize += (int) pair.getValue();
 		}
-		return countOfSize >= cacheSize;
+		return countOfSize >= (long)cacheSize * 1024 * 1024;
 	}
 	
 	public void accessCache(Block block) {
@@ -43,10 +43,10 @@ public class LRUCache extends LinkedHashMap {
 
 	private void customInsert(long id, int internalSize, Block block) {
 		if (remove(id)!= null) {
-			//if (block.blockOperation == CacheSim.OPERATION_READ) {
+			if (block.blockOperation == CacheSim.OPERATION_READ) {
 				totalHits++;
 				totalHitsSize += internalSize;
-			//}
+			}
 		}
 		
 		put(id, internalSize);
