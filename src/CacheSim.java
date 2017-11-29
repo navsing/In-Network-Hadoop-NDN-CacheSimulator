@@ -30,8 +30,8 @@ public class CacheSim {
         Graph G = new Graph(topology, CACHE_MAX_MBLOCKS);
 		In inLogFile = new In(args[1]);
 		int policyName = Integer.parseInt(args[2]);
-                if (args.length == 7) {
-                  numRouters = Integer.parseInt(args[6]);
+                if (args.length == 5) {
+                  numRouters = Integer.parseInt(args[4]);
                 }
 		
 		int k = 0;
@@ -62,7 +62,7 @@ public class CacheSim {
 					break;
 				}
 			}
-			b.src = k + 1;
+			b.src = k + numRouters;
 			for(k = 0; k < 128; k++){
 				if(lookupTable[k]==0){
 					lookupTable[k] = b.dest;
@@ -72,7 +72,7 @@ public class CacheSim {
 					break;
 				}
 			}
-			b.dest = k + 1;
+			b.dest = k + numRouters;
 			G.cache.get(b.src).enqueue(b);
 		}
 		while(true){
@@ -125,8 +125,8 @@ public class CacheSim {
 				break;
 			}
 		}
-		
-		for(int i = 0; i < 1; i++){
+	
+		for(int i = 0; i < numRouters; i++){
 //			System.out.println("Node :"+ i);
 			switch(policyName){
 			case 1: 
