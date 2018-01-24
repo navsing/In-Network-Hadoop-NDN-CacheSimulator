@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
+import java.util.Random;
 
 public class CacheSim {
 
@@ -12,6 +13,25 @@ public class CacheSim {
 	public final static int OPERATION_READ = 0;
 	public final static int OPERATION_WRITE = 1;
 	public final static int OPERATION_REMOVE = 2;
+
+	static int[] lookupTable = new int[128];
+	static Random rand = new Random();
+
+	public static int getOrAssignHostId(int host) {
+		for (int i = 0; i < 128; i++) {
+			if (lookupTable[i] == host) {
+				return i;
+			}
+		}
+
+		while (true) {
+			int i = rand.nextInt(128);
+			if (lookupTable[i] == 0) {
+				lookupTable[i] = host;
+				return i;
+			}
+		}
+	}
 
 	public static void checkHasAdjacency(Graph g, int node, int test) throws Exception {
 		boolean hasAdjacency = false;
@@ -66,9 +86,6 @@ public class CacheSim {
 		int policyName = Integer.parseInt(args[2]);
 		//int numRouters = Integer.parseInt(args[4]);
 
-		int k = 0;
-		int[] lookupTable = new int[128];
-
 		while (inLogFile.hasNextLine()) {
 			String[] meta = inLogFile.readLine().split(" ");
 			if (meta[1].equals("READ")) {
@@ -83,8 +100,10 @@ public class CacheSim {
 			dest = Integer.parseInt(meta[5]);
 
 			b = new Block(blockOperation, blockId, size, src, dest);
+			b.src = getOrAssignHostId(src) + numRouters;
+			b.dest = getOrAssignHostId(dest) + numRouters;
 
-			for (k = 0; k < 128; k++) {
+			/*for (k = 0; k < 128; k++) {
 				if (lookupTable[k] == 0) {
 					lookupTable[k] = b.src;
 					break;
@@ -103,7 +122,7 @@ public class CacheSim {
 					break;
 				}
 			}
-			b.dest = k + numRouters;
+			b.dest = k + numRouters;*/
 
 			if (b.src == b.dest) {
 				continue;
