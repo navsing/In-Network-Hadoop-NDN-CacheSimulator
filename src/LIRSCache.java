@@ -79,8 +79,8 @@ public final class LIRSCache {
 		this.headS = new Node();
 		this.headQ = new Node();
 	}
-	
-	public void accessCache(Block block) {
+
+	public boolean accessCache(Block block) {
 		/*for (int i = 0; i < Math.ceil((double) block.size / (double) CacheSim.CACHE_BLOCK_SIZE); i++) {
 			long internalId = ((int) block.blockId) + ((int) i) * 100000000000L;
 			int internalSize = CacheSim.CACHE_BLOCK_SIZE;
@@ -94,13 +94,14 @@ public final class LIRSCache {
 				break;
 			}
 		}*/
-		customInsert(block.blockId, block.size, block);
+		return customInsert(block.blockId, block.size, block);
 	}
 
-	public void customInsert(long key, int internalSize, Block block) {
+	public boolean customInsert(long key, int internalSize, Block block) {
 		totalAccesses++;
 		totalSize += internalSize;
 		Node node = data.get(key);
+		boolean wasHit = false;
 		if (node == null) {
 			node = new Node(key);
 			data.put(key, node);
@@ -109,12 +110,14 @@ public final class LIRSCache {
 			if (block.blockOperation == CacheSim.OPERATION_READ) {
 				totalHits++;
 				totalHitsSize += internalSize;
+				wasHit = true;
 			}
 			onLir(node, internalSize);
 		} else if (node.status == Status.HIR_RESIDENT) {
 			if (block.blockOperation == CacheSim.OPERATION_READ) {
 				totalHits++;
 				totalHitsSize += internalSize;
+				wasHit = true;
 			}
 			onResidentHir(node, internalSize);
 		} else if (node.status == Status.HIR_NON_RESIDENT) {
@@ -123,6 +126,7 @@ public final class LIRSCache {
 		} else {
 			throw new IllegalStateException();
 		}
+		return wasHit;
 	}
 
 	private void onLir(Node node, int internalSize) {
@@ -241,7 +245,7 @@ public final class LIRSCache {
 
 			Node bottom = headS.prevS;
 			if(bottom.status != Status.LIR){
-			
+
 
 			bottom.status = Status.HIR_RESIDENT;
 			bottom.removeFrom(StackType.S);
@@ -328,7 +332,7 @@ public final class LIRSCache {
 			evicted.add(bottom.key);
 		}
 	}
-	
+
 	enum Status {
 		LIR, HIR_RESIDENT, HIR_NON_RESIDENT;
 	}
@@ -392,7 +396,7 @@ public final class LIRSCache {
 					return isInNR;
 				} else {
 					throw new IllegalArgumentException();
-				} 
+				}
 			}
 			return isInNR;
 		}
@@ -465,7 +469,7 @@ public final class LIRSCache {
 					sizeNR--;
 				} else {
 					throw new IllegalArgumentException();
-				} 
+				}
 			}
 		}
 	}

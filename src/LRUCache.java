@@ -27,8 +27,8 @@ public class LRUCache extends LinkedHashMap {
 		}
 		return countOfSize >= (long)cacheSize * 1024 * 1024;
 	}
-	
-	public void accessCache(Block block) {
+
+	public boolean accessCache(Block block) {
 			/*for (int i = 0; i < Math.ceil((double)block.size / (double)CacheSim.CACHE_BLOCK_SIZE); i++) {
 				long internalId = ((int) block.blockId) + ((int) i) * 100000000000L;
 				int internalSize = CacheSim.CACHE_BLOCK_SIZE;
@@ -36,33 +36,35 @@ public class LRUCache extends LinkedHashMap {
 					internalSize = block.size - (i * CacheSim.CACHE_BLOCK_SIZE);
 				}
 				customInsert(internalId, internalSize, block);
-					
+
 			}*/
-			customInsert(block.blockId, block.size, block);
+			return customInsert(block.blockId, block.size, block);
 	}
 
-	private void customInsert(long id, int internalSize, Block block) {
+	private boolean customInsert(long id, int internalSize, Block block) {
+		boolean wasHit = false;
 		if (remove(id)!= null) {
 			if (block.blockOperation == CacheSim.OPERATION_READ) {
 				totalHits++;
 				totalHitsSize += internalSize;
+				wasHit = true;
 			}
 		}
-		
+
 		put(id, internalSize);
 		totalAccesses++;
 		totalSize += internalSize;
 
-		
+		return wasHit;
 	}
-	
+
 	public void report(){
 		if(totalAccesses == 0){
 			System.out.println("No Activity");
 			return;
 		}
-		
+
 		System.out.println(totalAccesses+","+totalHits+","+((double)totalHits)/((double)totalAccesses)+","+totalSize+","+totalHitsSize+","+((double)totalHitsSize)/((double)totalSize));
-		
+
 	}
 }

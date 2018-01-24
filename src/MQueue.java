@@ -46,12 +46,12 @@ public final class MQueue {
 	private final Node[] headQ;
 	private final int maxOut;
 
-	
+
 	private long totalAccesses;
 	private long totalHits;
 	private long totalSize;
 	private long totalHitsSize;
-	
+
 	private long currentTime;
 
 	public MQueue(int cacheSize) {
@@ -66,8 +66,8 @@ public final class MQueue {
 		Arrays.setAll(threshold, i -> 1L << i);
 		maxOut = maximumSize;
 	}
-	
-	public void accessCache(Block block) {
+
+	public boolean accessCache(Block block) {
 		/*for (int i = 0; i < Math.ceil((double) block.size / (double) CacheSim.CACHE_BLOCK_SIZE); i++) {
 			long internalId = ((int) block.blockId) + ((int) i) * 100000000000L;
 			int internalSize = CacheSim.CACHE_BLOCK_SIZE;
@@ -81,11 +81,12 @@ public final class MQueue {
 				break;
 			}
 		}*/
-	customInsert(block.blockId, block.size, block);
+		return customInsert(block.blockId, block.size, block);
 	}
-	
-	public void customInsert(long key, int internalSize, Block block) {
+
+	public boolean customInsert(long key, int internalSize, Block block) {
 		Node node = data.get(key);
+		boolean wasHit = false;
 		if (node == null) {
 			node = out.remove(key);
 			if (node == null) {
@@ -99,6 +100,7 @@ public final class MQueue {
 			//if (block.blockOperation == CacheSim.OPERATION_READ) {
 				totalHits++;
 				totalHitsSize += internalSize;
+				wasHit = true;
 			//}
 			node.remove();
 		}
@@ -109,6 +111,7 @@ public final class MQueue {
 		node.appendToTail(headQ[node.queueIndex]);
 		node.expireTime = currentTime + lifetime;
 		adjust();
+		return wasHit;
 	}
 
 	private void adjust() {
@@ -207,7 +210,7 @@ public final class MQueue {
 			}
 		}
 	}
-	
+
 	public void report() {
    if(totalAccesses == 0){
                         System.out.println("No Activity");

@@ -31,7 +31,7 @@ public final class ARCCache {
 		this.headB2 = new Node();
 	}
 
-	public void accessCache(Block block) {
+	public boolean accessCache(Block block) {
 		/*for (int i = 0; i < Math.ceil((double)block.size / (double)CacheSim.CACHE_BLOCK_SIZE); i++) {
 			long internalId = ((int) block.blockId) + ((int) i) * 100000000000L;
 			int internalSize = CacheSim.CACHE_BLOCK_SIZE;
@@ -45,11 +45,12 @@ public final class ARCCache {
 				break;
 			}
 		}*/
-	customInsert(block.blockId, block.size, block);
+		return customInsert(block.blockId, block.size, block);
 	}
 
-	public void customInsert(long id, int internalSize, Block block) {
+	public boolean customInsert(long id, int internalSize, Block block) {
 		Node node = data.get(id);
+		boolean wasHit = false;
 		totalAccesses++;
 		totalSize += internalSize;
 		if (node == null) {
@@ -58,21 +59,25 @@ public final class ARCCache {
 			if (block.blockOperation == CacheSim.OPERATION_READ) {
 				totalHits++;
 				totalHitsSize += internalSize;
+				wasHit = true;
 			}
 			onHitB1(node, internalSize, block);
 		} else if (node.type == QueueType.B2) {
 			if (block.blockOperation == CacheSim.OPERATION_READ) {
 				totalHits++;
 				totalHitsSize += internalSize;
+				wasHit = true;
 			}
 			onHitB2(node, internalSize, block);
 		} else {
 			if (block.blockOperation == CacheSim.OPERATION_READ) {
 				totalHits++;
 				totalHitsSize += internalSize;
+				wasHit = true;
 			}
 			onHit(node, internalSize, block);
 		}
+		return wasHit;
 	}
 
 	private void onHit(Node node, int internalSize, Block block) {
@@ -206,7 +211,7 @@ public final class ARCCache {
 			}
 		}
 	}
-	
+
 	public void report() {
    if(totalAccesses == 0){
                         System.out.println("No Activity");

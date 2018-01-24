@@ -241,6 +241,56 @@ public class CacheSim {
 				}
 			}
 
+			// Run cache over path
+			while (path.size() > 0) {
+				if (b.blockOperation == OPERATION_READ) {
+					int curNode = path.pollLast();
+
+					boolean wasHit = false;
+
+					switch(policyName){
+						case 1:
+							wasHit = G.returnVertex(curNode).getLRU().accessCache(b);
+							break;
+						case 2:
+							// TODO: Implement wasHit
+							//wasHit = G.returnVertex(curNode).getLRFU().accessCache(b);
+							break;
+						case 3:
+							// TODO: Implement wasHit
+							//wasHit = G.returnVertex(curNode).getLRU2().accessCache(b);
+							break;
+						case 4:
+							wasHit = G.returnVertex(curNode).getARC().accessCache(b);
+							break;
+						case 5:
+							// TODO: Implement wasHit
+							//wasHit = G.returnVertex(curNode).getTwoQueue().accessCache(b);
+							break;
+						case 6:
+							//G.returnVertex(curNoe).getOPT().accessCache(b);
+							break;
+						case 7:
+							wasHit = G.returnVertex(curNode).getMQ().accessCache(b);
+							break;
+						case 8:
+							wasHit = G.returnVertex(curNode).getLirs().accessCache(b);
+							break;
+						default:
+							System.err.println("Enter the right parameter for cache policy");
+							System.exit(-3);
+					}
+
+					if (wasHit) {
+						break;
+					}
+				}
+				else {
+					System.err.println("Not processing write operations in current implementation");
+				}
+			}
+		}
+
 		/*while(true){
 			boolean allEmpty = true;
 			for(int i = 0 ; i < G.listOfVertex.size(); i++){
@@ -292,7 +342,78 @@ public class CacheSim {
 			}
 		}*/
 
-		for(int i = 0; i < numRouters; i++){
+		System.out.println("Core:");
+		for(int i = coreStart; i < nCore; i++){
+//			System.out.println("Node :"+ i);
+			switch(policyName){
+			case 1:
+				G.returnVertex(i).getLRU().report();
+				break;
+			case 2:
+				G.returnVertex(i).getLRFU().report();
+				break;
+			case 3:
+				G.returnVertex(i).getLRU2().report();
+				break;
+			case 4:
+				System.out.println("ARC");
+				G.returnVertex(i).getARC().report();
+				break;
+			case 5:
+				G.returnVertex(i).getTwoQueue().report();
+				break;
+			case 6:
+				//G.returnVertex(i).getOPT().report();
+				break;
+			case 7:
+				G.returnVertex(i).getMQ().report();
+				break;
+			case 8:
+				G.returnVertex(i).getLirs().report();
+				break;
+			default:
+				System.out.println("Enter the right parameter for cache policy");
+			}
+		}
+
+		System.out.println();
+		System.out.println("Aggregation:");
+		for(int i = aggrStart; i < aggrStart + nAggrPerPod * nPods; i++){
+//			System.out.println("Node :"+ i);
+			switch(policyName){
+			case 1:
+				G.returnVertex(i).getLRU().report();
+				break;
+			case 2:
+				G.returnVertex(i).getLRFU().report();
+				break;
+			case 3:
+				G.returnVertex(i).getLRU2().report();
+				break;
+			case 4:
+				System.out.println("ARC");
+				G.returnVertex(i).getARC().report();
+				break;
+			case 5:
+				G.returnVertex(i).getTwoQueue().report();
+				break;
+			case 6:
+				//G.returnVertex(i).getOPT().report();
+				break;
+			case 7:
+				G.returnVertex(i).getMQ().report();
+				break;
+			case 8:
+				G.returnVertex(i).getLirs().report();
+				break;
+			default:
+				System.out.println("Enter the right parameter for cache policy");
+			}
+		}
+
+		System.out.println();
+		System.out.println("Edge:");
+		for(int i = edgeStart; i < edgeStart + nEdgePerPod * nPods; i++){
 //			System.out.println("Node :"+ i);
 			switch(policyName){
 			case 1:
