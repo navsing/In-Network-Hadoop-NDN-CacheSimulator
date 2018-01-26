@@ -47,9 +47,9 @@ public class CacheSim {
 	}
 
 	public static void main(String[] args) {
-		if (args.length != 5) {
+		if (args.length < 5 || args.length > 6) {
 			System.err.println("Usage: ");
-			System.err.println("java CacheSim [topology] [inLogFile] [policyName] [cacheMaxBlocks] [fatTreeK]");
+			System.err.println("java CacheSim [topology] [inLogFile] [policyName] [cacheMaxBlocks] [fatTreeK] (randSeed)");
 			System.exit(-1);
 		}
 
@@ -63,6 +63,12 @@ public class CacheSim {
 		Block b;
 
 		int CACHE_MAX_MBLOCKS = Integer.parseInt(args[3]);
+
+		// Set prng seed (if specified)
+		if (args.length == 6) {
+			long seed = Long.parseLong(args[5]);
+			rand.setSeed(seed);
+		}
 
 		// Topology values
 		final int NUM_NODES = 128;
@@ -375,7 +381,7 @@ public class CacheSim {
 				G.returnVertex(i).getLRU2().report();
 				break;
 			case 4:
-				System.out.println("ARC");
+				//System.out.println("ARC");
 				G.returnVertex(i).getARC().report();
 				break;
 			case 5:
@@ -410,7 +416,7 @@ public class CacheSim {
 				G.returnVertex(i).getLRU2().report();
 				break;
 			case 4:
-				System.out.println("ARC");
+				//System.out.println("ARC");
 				G.returnVertex(i).getARC().report();
 				break;
 			case 5:
@@ -445,7 +451,7 @@ public class CacheSim {
 				G.returnVertex(i).getLRU2().report();
 				break;
 			case 4:
-				System.out.println("ARC");
+				//System.out.println("ARC");
 				G.returnVertex(i).getARC().report();
 				break;
 			case 5:
