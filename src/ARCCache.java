@@ -3,7 +3,9 @@ import java.util.*;
 
 public final class ARCCache {
 
-	private final HashMap<Long, Node> data;
+	private final int CACHEBLOCKSIZE = 1048576;
+
+	private final HashMap<String, Node> data;
 	private final int maximumSize;
 
 	private final Node headT1;
@@ -24,7 +26,7 @@ public final class ARCCache {
 
 	public ARCCache(int cacheSize) {
 		this.maximumSize = cacheSize;
-		this.data = new HashMap<Long, Node>();
+		this.data = new HashMap<String, Node>();
 		this.headT1 = new Node();
 		this.headT2 = new Node();
 		this.headB1 = new Node();
@@ -45,10 +47,25 @@ public final class ARCCache {
 				break;
 			}
 		}*/
-		return customInsert(block.blockId, block.size, block);
+
+		boolean wasHitForAll = true;
+		int nCacheBlocks = (int)Math.ceil((double)block.size / (double)CACHEBLOCKSIZE);
+		for (int i = 0; i < nCacheBlocks; i++) {
+			String cacheBlockId = block.blockId + "_" + i;
+			if (!customInsert(cacheBlockId, CACHEBLOCKSIZE, block)) {
+				wasHitForAll = false;
+			}
+		}
+
+		if (wasHitForAll) {
+			totalHits += nCacheBlocks;
+			totalHitsSize += nCacheBlocks * CACHEBLOCKSIZE;
+		}
+
+		return wasHitForAll;
 	}
 
-	public boolean customInsert(long id, int internalSize, Block block) {
+	public boolean customInsert(String id, int internalSize, Block block) {
 		Node node = data.get(id);
 		boolean wasHit = false;
 		totalAccesses++;
@@ -57,22 +74,16 @@ public final class ARCCache {
 			onMiss(id, internalSize, block);
 		} else if (node.type == QueueType.B1) {
 			if (block.blockOperation == CacheSim.OPERATION_READ) {
-				totalHits++;
-				totalHitsSize += internalSize;
 				wasHit = true;
 			}
 			onHitB1(node, internalSize, block);
 		} else if (node.type == QueueType.B2) {
 			if (block.blockOperation == CacheSim.OPERATION_READ) {
-				totalHits++;
-				totalHitsSize += internalSize;
 				wasHit = true;
 			}
 			onHitB2(node, internalSize, block);
 		} else {
 			if (block.blockOperation == CacheSim.OPERATION_READ) {
-				totalHits++;
-				totalHitsSize += internalSize;
 				wasHit = true;
 			}
 			onHit(node, internalSize, block);
@@ -115,7 +126,7 @@ public final class ARCCache {
 		node.appendToTail(headT2);
 	}
 
-	private void onMiss(long key, int internalSize, Block block) {
+	private void onMiss(String key, int internalSize, Block block) {
 
 		Node node = new Node(key);
 		node.type = QueueType.T1;
@@ -176,19 +187,19 @@ public final class ARCCache {
 	}
 
 	static final class Node {
-		final long key;
+		final String key;
 
 		Node prev;
 		Node next;
 		QueueType type;
 
 		Node() {
-			this.key = Long.MIN_VALUE;
+			this.key = null;
 			this.prev = this;
 			this.next = this;
 		}
 
-		Node(long key) {
+		Node(String key) {
 			this.key = key;
 		}
 
@@ -203,7 +214,7 @@ public final class ARCCache {
 
 		/** Removes the node from the list. */
 		public void remove() {
-			if(key != Long.MIN_VALUE) {
+			if(key != null) {
 				prev.next = next;
 				next.prev = prev;
 				prev = next = null;
@@ -213,11 +224,15 @@ public final class ARCCache {
 	}
 
 	public void report() {
-   if(totalAccesses == 0){
-                        System.out.println("No Activity");
-                        return;
-                }
-
-                System.out.println(totalAccesses+","+totalHits+","+((double)totalHits)/((double)totalAccesses)+","+totalSize+","+totalHitsSize+","+((double)totalHitsSize)/((double)totalSize));
+		if (totalAccesses == 0){
+			System.out.println("No Activity");
+		}
+		else {
+			System.out.print(totalAccesses + "," + totalHits + ",");
+			System.out.printf("%.16f", ((double)totalHits)/((double)totalAccesses));
+			System.out.print("," + totalSize + "," + totalHitsSize + ",");
+			System.out.printf("%.16f", ((double)totalHitsSize)/((double)totalSize));
+			System.out.println();
+		}
 	}
 }

@@ -6,6 +6,7 @@ import java.util.*;
 public class LRUCache extends LinkedHashMap {
 
 	private static final long serialVersionUID = 1L;
+	private final int CACHEBLOCKSIZE = 1048576;
 	private int cacheSize;
 	private long totalAccesses;
 	private long totalHits;
@@ -38,15 +39,27 @@ public class LRUCache extends LinkedHashMap {
 				customInsert(internalId, internalSize, block);
 
 			}*/
-			return customInsert(block.blockId, block.size, block);
+			boolean wasHitForAll = true;
+			int nCacheBlocks = (int)Math.ceil((double)block.size / (double)CACHEBLOCKSIZE);
+			for (int i = 0; i < nCacheBlocks; i++) {
+				String cacheBlockId = block.blockId + "_" + i;
+				if (!customInsert(cacheBlockId, CACHEBLOCKSIZE, block)) {
+					wasHitForAll = false;
+				}
+			}
+
+			if (wasHitForAll) {
+				totalHits += nCacheBlocks;
+				totalHitsSize += nCacheBlocks * CACHEBLOCKSIZE;
+			}
+
+			return wasHitForAll;
 	}
 
-	private boolean customInsert(long id, int internalSize, Block block) {
+	private boolean customInsert(String id, int internalSize, Block block) {
 		boolean wasHit = false;
 		if (remove(id)!= null) {
 			if (block.blockOperation == CacheSim.OPERATION_READ) {
-				totalHits++;
-				totalHitsSize += internalSize;
 				wasHit = true;
 			}
 		}
@@ -59,12 +72,15 @@ public class LRUCache extends LinkedHashMap {
 	}
 
 	public void report(){
-		if(totalAccesses == 0){
+		if (totalAccesses == 0){
 			System.out.println("No Activity");
-			return;
 		}
-
-		System.out.println(totalAccesses+","+totalHits+","+((double)totalHits)/((double)totalAccesses)+","+totalSize+","+totalHitsSize+","+((double)totalHitsSize)/((double)totalSize));
-
+		else {
+			System.out.print(totalAccesses + "," + totalHits + ",");
+			System.out.printf("%.16f", ((double)totalHits)/((double)totalAccesses));
+			System.out.print("," + totalSize + "," + totalHitsSize + ",");
+			System.out.printf("%.16f", ((double)totalHitsSize)/((double)totalSize));
+			System.out.println();
+		}
 	}
 }

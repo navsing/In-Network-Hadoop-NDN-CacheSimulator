@@ -47,9 +47,9 @@ public class CacheSim {
 	}
 
 	public static void main(String[] args) {
-		if (args.length < 5 || args.length > 6) {
+		if (args.length < 7 || args.length > 8) {
 			System.err.println("Usage: ");
-			System.err.println("java CacheSim [topology] [inLogFile] [policyName] [cacheMaxBlocks] [fatTreeK] (randSeed)");
+			System.err.println("java CacheSim [topology] [inLogFile] [edgePolicyName] [aggrPolicyName] [corePolicyName] [cacheMaxBlocks] [fatTreeK] (randSeed)");
 			System.exit(-1);
 		}
 
@@ -62,17 +62,17 @@ public class CacheSim {
 		//Queue<Block> cache = new Queue<Block>();
 		Block b;
 
-		int CACHE_MAX_MBLOCKS = Integer.parseInt(args[3]);
+		int CACHE_MAX_MBLOCKS = Integer.parseInt(args[5]);
 
 		// Set prng seed (if specified)
 		if (args.length == 6) {
-			long seed = Long.parseLong(args[5]);
+			long seed = Long.parseLong(args[7]);
 			rand.setSeed(seed);
 		}
 
 		// Topology values
 		final int NUM_NODES = 128;
-		int fatTreeK = Integer.parseInt(args[4]);
+		int fatTreeK = Integer.parseInt(args[6]);
 		int podSize = (int)Math.pow(fatTreeK / 2, 2);
 		int nPods = NUM_NODES / podSize;
 		int nEdgePerPod = fatTreeK / 2;
@@ -89,7 +89,9 @@ public class CacheSim {
 		In topology = new In(args[0]);
 		Graph G = new Graph(topology, CACHE_MAX_MBLOCKS);
 		In inLogFile = new In(args[1]);
-		int policyName = Integer.parseInt(args[2]);
+		int edgePolicyName = Integer.parseInt(args[2]);
+		int aggrPolicyName = Integer.parseInt(args[3]);
+		int corePolicyName = Integer.parseInt(args[4]);
 		//int numRouters = Integer.parseInt(args[4]);
 
 		while (inLogFile.hasNextLine()) {
@@ -273,6 +275,17 @@ public class CacheSim {
 
 					boolean wasHit = false;
 
+					int policyName = -1;
+					if (curNode >= coreStart && curNode < aggrStart) {
+						policyName = corePolicyName;
+					}
+					else if (curNode >= aggrStart && curNode < edgeStart) {
+						policyName = aggrPolicyName;
+					}
+					else if (curNode >= edgeStart && curNode < edgeStart + nPods * nAggrPerPod) {
+						policyName = edgePolicyName;
+					}
+
 					switch(policyName){
 						case 1:
 							wasHit = G.returnVertex(curNode).getLRU().accessCache(b);
@@ -369,8 +382,7 @@ public class CacheSim {
 
 		System.out.println("Core:");
 		for(int i = coreStart; i < nCore; i++){
-//			System.out.println("Node :"+ i);
-			switch(policyName){
+			switch(corePolicyName){
 			case 1:
 				G.returnVertex(i).getLRU().report();
 				break;
@@ -404,8 +416,7 @@ public class CacheSim {
 		System.out.println();
 		System.out.println("Aggregation:");
 		for(int i = aggrStart; i < aggrStart + nAggrPerPod * nPods; i++){
-//			System.out.println("Node :"+ i);
-			switch(policyName){
+			switch(aggrPolicyName){
 			case 1:
 				G.returnVertex(i).getLRU().report();
 				break;
@@ -439,8 +450,7 @@ public class CacheSim {
 		System.out.println();
 		System.out.println("Edge:");
 		for(int i = edgeStart; i < edgeStart + nEdgePerPod * nPods; i++){
-//			System.out.println("Node :"+ i);
-			switch(policyName){
+			switch(edgePolicyName){
 			case 1:
 				G.returnVertex(i).getLRU().report();
 				break;

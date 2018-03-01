@@ -38,13 +38,15 @@ import java.util.*;
  * @author ben.manes@gmail.com (Ben Manes)
  */
 public final class MQueue {
-	private final SortedMap<Long, Node> out;
-	private final HashMap<Long, Node> data;
+	private final SortedMap<String, Node> out;
+	private final HashMap<String, Node> data;
 	private final long[] threshold;
 	private final int maximumSize;
 	private final long lifetime;
 	private final Node[] headQ;
 	private final int maxOut;
+
+	private final int CACHEBLOCKSIZE = 1048576;
 
 
 	private long totalAccesses;
@@ -57,8 +59,8 @@ public final class MQueue {
 	public MQueue(int cacheSize) {
 		threshold = new long[10];
 		headQ = new Node[10];
-		out = new TreeMap<Long, Node>();
-		data = new HashMap<Long, Node>();
+		out = new TreeMap<String, Node>();
+		data = new HashMap<String, Node>();
 		maximumSize = cacheSize;
 		lifetime = 16000;
 
@@ -81,10 +83,25 @@ public final class MQueue {
 				break;
 			}
 		}*/
-		return customInsert(block.blockId, block.size, block);
+
+		boolean wasHitForAll = true;
+		int nCacheBlocks = (int)Math.ceil((double)block.size / (double)CACHEBLOCKSIZE);
+		for (int i = 0; i < nCacheBlocks; i++) {
+			String cacheBlockId = block.blockId + "_" + i;
+			if (!customInsert(cacheBlockId, CACHEBLOCKSIZE, block)) {
+				wasHitForAll = false;
+			}
+		}
+
+		if (wasHitForAll) {
+			totalHits += nCacheBlocks;
+			totalHitsSize += nCacheBlocks * CACHEBLOCKSIZE;
+		}
+
+		return wasHitForAll;
 	}
 
-	public boolean customInsert(long key, int internalSize, Block block) {
+	public boolean customInsert(String key, int internalSize, Block block) {
 		Node node = data.get(key);
 		boolean wasHit = false;
 		if (node == null) {
@@ -98,8 +115,6 @@ public final class MQueue {
 			}*/
 		} else {
 			//if (block.blockOperation == CacheSim.OPERATION_READ) {
-				totalHits++;
-				totalHitsSize += internalSize;
 				wasHit = true;
 			//}
 			node.remove();
@@ -157,7 +172,7 @@ public final class MQueue {
 	}
 
 	static final class Node {
-		final long key;
+		final String key;
 
 		Node prev;
 		Node next;
@@ -165,12 +180,12 @@ public final class MQueue {
 		int queueIndex;
 		long expireTime;
 
-		Node(long key) {
+		Node(String key) {
 			this.key = key;
 		}
 
 		static Node sentinel(int queueIndex) {
-			Node node = new Node(Long.MIN_VALUE);
+			Node node = new Node("SENTINEL");
 			node.expireTime = Long.MAX_VALUE;
 			node.queueIndex = queueIndex;
 			node.prev = node;
@@ -202,7 +217,7 @@ public final class MQueue {
 
 		/** Removes the node from the list. */
 		public void remove() {
-			if (key != Long.MIN_VALUE) {
+			if (key.equals("SENTINEL")) {
 				queueIndex = -1;
 				prev.next = next;
 				next.prev = prev;
@@ -212,11 +227,15 @@ public final class MQueue {
 	}
 
 	public void report() {
-   if(totalAccesses == 0){
-                        System.out.println("No Activity");
-                        return;
-                }
-
-                System.out.println(totalAccesses+","+totalHits+","+((double)totalHits)/((double)totalAccesses)+","+totalSize+","+totalHitsSize+","+((double)totalHitsSize)/((double)totalSize));
+		if (totalAccesses == 0){
+			System.out.println("No Activity");
+		}
+		else {
+			System.out.print(totalAccesses + "," + totalHits + ",");
+			System.out.printf("%.16f", ((double)totalHits)/((double)totalAccesses));
+			System.out.print("," + totalSize + "," + totalHitsSize + ",");
+			System.out.printf("%.16f", ((double)totalHitsSize)/((double)totalSize));
+			System.out.println();
+		}
 	}
 }
