@@ -122,27 +122,31 @@ public final class LIRSCache {
 		if (node == null) {
 			node = new Node(key);
 			data.put(key, node);
-			onNonResidentHir(node, internalSize);
-		} else if (node.status == Status.LIR) {
+			onNonResidentHir(node);
+		}
+		else if (node.status == Status.LIR) {
 			if (block.blockOperation == CacheSim.OPERATION_READ) {
 				wasHit = true;
 			}
-			onLir(node, internalSize);
-		} else if (node.status == Status.HIR_RESIDENT) {
+			onLir(node);
+		}
+		else if (node.status == Status.HIR_RESIDENT) {
 			if (block.blockOperation == CacheSim.OPERATION_READ) {
 				wasHit = true;
 			}
-			onResidentHir(node, internalSize);
-		} else if (node.status == Status.HIR_NON_RESIDENT) {
+			onResidentHir(node);
+		}
+		else if (node.status == Status.HIR_NON_RESIDENT) {
 			node.removeFrom(StackType.NR);
-			onNonResidentHir(node, internalSize);
-		} else {
+			onNonResidentHir(node);
+		}
+		else {
 			throw new IllegalStateException();
 		}
 		return wasHit;
 	}
 
-	private void onLir(Node node, int internalSize) {
+	private void onLir(Node node) {
 		// Upon accessing an LIR block X. This access is guaranteed to be a hit
 		// in the cache. We move
 		// it to the top of stack S. If the LIR block is originally located at
@@ -153,11 +157,11 @@ public final class LIRSCache {
 		boolean wasBottom = (headS.prevS == node);
 		node.moveToTop(StackType.S);
 		if (wasBottom) {
-			pruneStack(internalSize);
+			pruneStack();
 		}
 	}
 
-	private void onResidentHir(Node node, int internalSize) {
+	private void onResidentHir(Node node) {
 		// Upon accessing an HIR resident block X. This is a hit in the cache.
 		// We move it to the top
 		// of the stack S. There are two cases for the original location of
@@ -172,10 +176,12 @@ public final class LIRSCache {
 		// status unchanged and move
 		// it to the top of stack Q.
 		boolean isInStack = node.isInStack(StackType.S);
-		boolean isTop = node.isStackTop(StackType.S);
+		//boolean isTop = node.isStackTop(StackType.S);
 		node.moveToTop(StackType.S);
 
-		if (isInStack && !isTop) {
+		// TODO: Why are we checking if it is not at the top? Does it matter?
+		//if (isInStack && !isTop) {
+		if (isInStack) {
 			sizeHot++;
 			node.status = Status.LIR;
 			node.removeFrom(StackType.Q);
@@ -187,13 +193,14 @@ public final class LIRSCache {
 			bottom.removeFrom(StackType.S);
 			bottom.moveToTop(StackType.Q);
 
-			pruneStack(internalSize);
-		} else {
+			pruneStack();
+		}
+		else {
 			node.moveToTop(StackType.Q);
 		}
 	}
 
-	private void onNonResidentHir(Node node, int internalSize) {
+	private void onNonResidentHir(Node node) {
 		// When an LIR block set is not full, all the accessed blocks are given
 		// LIR status until its
 		// size reaches Llirs. After that, HIR status is given to any blocks
@@ -206,9 +213,8 @@ public final class LIRSCache {
 		} else if (residentSize < maximumSize) {
 			onHirWarmupMiss(node);
 		} else {
-			onFullMiss(node, internalSize);
+			onFullMiss(node);
 		}
-		residentSize++;
 	}
 
 	/** Records a miss when the hot set is not full. */
@@ -216,16 +222,20 @@ public final class LIRSCache {
 		node.moveToTop(StackType.S);
 		node.status = Status.LIR;
 		sizeHot++;
+		residentSize++;
 	}
 
 	/** Records a miss when the cold set is not full. */
 	private void onHirWarmupMiss(Node node) {
 		node.status = Status.HIR_RESIDENT;
 		node.moveToTop(StackType.Q);
+		// TODO: Is this correct behavior?
+		node.moveToTop(StackType.S);
+		residentSize++;
 	}
 
-	/** Records a miss when the hot set is full. */
-	private void onFullMiss(Node node, int internalSize) {
+	/** Records a miss when the hot and cold sets are full. */
+	private void onFullMiss(Node node) {
 		// Upon accessing an HIR non-resident block X. This is a miss. We remove
 		// the HIR resident block
 		// at the bottom of stack Q (it then becomes a non-resident block) and
@@ -245,9 +255,10 @@ public final class LIRSCache {
 		// the transition from state (a) to state (e) in Fig. 2.
 
 		node.status = Status.HIR_RESIDENT;
-		if (residentSize >= maximumSize) {
+		/*if (residentSize >= maximumSize) {
 			evict(internalSize);
-		}
+		}*/
+		evict();
 
 		boolean isInStack = node.isInStack(StackType.S);
 		node.moveToTop(StackType.S);
@@ -257,22 +268,19 @@ public final class LIRSCache {
 			sizeHot++;
 
 			Node bottom = headS.prevS;
-			if(bottom.status != Status.LIR){
-
-
 			bottom.status = Status.HIR_RESIDENT;
 			bottom.removeFrom(StackType.S);
 			bottom.moveToTop(StackType.Q);
 			sizeHot--;
 
-			pruneStack(internalSize);
-			}
-		} else {
+			pruneStack();
+		}
+		else {
 			node.moveToTop(StackType.Q);
 		}
 	}
 
-	private void pruneStack(int internalSize) {
+	private void pruneStack() {
 		// In the LIRS replacement, there is an operation called "stack pruning"
 		// on LIRS stack S, which
 		// removes the HIR blocks at the stack bottom until a LIR block sits
@@ -291,7 +299,8 @@ public final class LIRSCache {
 			Node bottom = headS.prevS;
 			if ((bottom == headS) || (bottom.status == Status.LIR)) {
 				break;
-			} else if (bottom.status == Status.HIR_NON_RESIDENT) {
+			}
+			else if (bottom.status == Status.HIR_NON_RESIDENT) {
 				// the map only needs to hold non-resident entries that are on
 				// the stack
 				bottom.removeFrom(StackType.NR);
@@ -317,7 +326,7 @@ public final class LIRSCache {
 		}
 	}
 
-	private void evict(int internalSize) {
+	private void evict() {
 		// Once a free block is needed, the LIRS algorithm removes a resident
 		// HIR block from the bottom
 		// of stack Q for replacement. However, the replaced HIR block remains
@@ -328,7 +337,7 @@ public final class LIRSCache {
 		// blocks after it.
 
 
-		residentSize--;
+		//residentSize--;
 		Node bottom = headQ.prevQ;
 		bottom.removeFrom(StackType.Q);
 		bottom.status = Status.HIR_NON_RESIDENT;
@@ -339,7 +348,7 @@ public final class LIRSCache {
 			// stack
 			data.remove(bottom.key);
 		}
-		pruneStack(internalSize);
+		pruneStack();
 
 		if (debug) {
 			evicted.add(bottom.key);
