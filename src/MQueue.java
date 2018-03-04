@@ -93,9 +93,9 @@ public final class MQueue {
 				node = new Node(key);
 			}
 			data.put(key, node);
-			/*if (data.size() > maximumSize) {
+			if (data.size() > maximumSize) {
 				evict();
-			}*/
+			}
 		} else {
 			//if (block.blockOperation == CacheSim.OPERATION_READ) {
 				totalHits++;
@@ -151,9 +151,9 @@ public final class MQueue {
 		victim.remove();
 		data.remove(victim.key);
 		out.put(victim.key, victim);
-		/*if (out.size() > maxOut) {
+		if (out.size() > maxOut) {
 			out.remove(out.firstKey());
-		}*/
+		}
 	}
 
 	static final class Node {
