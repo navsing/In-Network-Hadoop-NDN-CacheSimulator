@@ -14,7 +14,7 @@ public class LRUCache extends LinkedHashMap {
 	private long hashmapSize;
 
 	public LRUCache(int cacheSize) {
-		super(cacheSize, (float) 0.75, true);
+		super(cacheSize * 1024 * 1024 / CacheSim.CACHE_BLOCK_SIZE, (float) 0.75, true);
 		this.cacheSize = cacheSize;
 	}
 

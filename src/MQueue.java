@@ -58,7 +58,7 @@ public final class MQueue {
 		headQ = new Node[10];
 		out = new TreeMap<Long, Node>();
 		data = new HashMap<Long, Node>();
-		maximumSize = cacheSize;
+		maximumSize = cacheSize * 1024 * 1024 / CacheSim.CACHE_BLOCK_SIZE;
 		lifetime = 16000;
 
 		Arrays.setAll(headQ, Node::sentinel);
