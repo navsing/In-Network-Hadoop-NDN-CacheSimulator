@@ -23,7 +23,7 @@ public final class ARCCache {
 	private long totalHitsSize;
 
 	public ARCCache(int cacheSize) {
-		this.maximumSize = cacheSize * 1024 * 1024 / CacheSim.CACHE_BLOCK_SIZE;
+		this.maximumSize = (int)(cacheSize * 1024L * 1024L / CacheSim.CACHE_BLOCK_SIZE);
 		this.data = new HashMap<Long, Node>();
 		this.headT1 = new Node();
 		this.headT2 = new Node();
