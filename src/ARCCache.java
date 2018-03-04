@@ -3,9 +3,7 @@ import java.util.*;
 
 public final class ARCCache {
 
-	private final int CACHEBLOCKSIZE = 1048576;
-
-	private final HashMap<String, Node> data;
+	private final HashMap<Long, Node> data;
 	private final int maximumSize;
 
 	private final Node headT1;
@@ -26,14 +24,14 @@ public final class ARCCache {
 
 	public ARCCache(int cacheSize) {
 		this.maximumSize = cacheSize;
-		this.data = new HashMap<String, Node>();
+		this.data = new HashMap<Long, Node>();
 		this.headT1 = new Node();
 		this.headT2 = new Node();
 		this.headB1 = new Node();
 		this.headB2 = new Node();
 	}
 
-	public boolean accessCache(Block block) {
+	public boolean accessCache(long segmentId) {
 		/*for (int i = 0; i < Math.ceil((double)block.size / (double)CacheSim.CACHE_BLOCK_SIZE); i++) {
 			long internalId = ((int) block.blockId) + ((int) i) * 100000000000L;
 			int internalSize = CacheSim.CACHE_BLOCK_SIZE;
@@ -48,50 +46,39 @@ public final class ARCCache {
 			}
 		}*/
 
-		boolean wasHitForAll = true;
-		int nCacheBlocks = (int)Math.ceil((double)block.size / (double)CACHEBLOCKSIZE);
-		for (int i = 0; i < nCacheBlocks; i++) {
-			String cacheBlockId = block.blockId + "_" + i;
-			if (!customInsert(cacheBlockId, CACHEBLOCKSIZE, block)) {
-				wasHitForAll = false;
-			}
-		}
-
-		if (wasHitForAll) {
-			totalHits += nCacheBlocks;
-			totalHitsSize += nCacheBlocks * CACHEBLOCKSIZE;
-		}
-
-		return wasHitForAll;
+		return customInsert(segmentId, CacheSim.CACHE_BLOCK_SIZE);
 	}
 
-	public boolean customInsert(String id, int internalSize, Block block) {
+	public boolean customInsert(long id, int internalSize) {
 		Node node = data.get(id);
 		boolean wasHit = false;
 		totalAccesses++;
 		totalSize += internalSize;
 		if (node == null) {
-			onMiss(id, internalSize, block);
-		} else if (node.type == QueueType.B1) {
-			if (block.blockOperation == CacheSim.OPERATION_READ) {
-				wasHit = true;
-			}
-			onHitB1(node, internalSize, block);
-		} else if (node.type == QueueType.B2) {
-			if (block.blockOperation == CacheSim.OPERATION_READ) {
-				wasHit = true;
-			}
-			onHitB2(node, internalSize, block);
-		} else {
-			if (block.blockOperation == CacheSim.OPERATION_READ) {
-				wasHit = true;
-			}
-			onHit(node, internalSize, block);
+			onMiss(id, internalSize);
+		}
+		else if (node.type == QueueType.B1) {
+			totalHits++;
+			totalHitsSize += internalSize;
+			wasHit = true;
+			onHitB1(node, internalSize);
+		}
+		else if (node.type == QueueType.B2) {
+			totalHits++;
+			totalHitsSize += internalSize;
+			wasHit = true;
+			onHitB2(node, internalSize);
+		}
+		else {
+			totalHits++;
+			totalHitsSize += internalSize;
+			wasHit = true;
+			onHit(node, internalSize);
 		}
 		return wasHit;
 	}
 
-	private void onHit(Node node, int internalSize, Block block) {
+	private void onHit(Node node, int internalSize) {
 
 		if (node.type == QueueType.T1) {
 			sizeT1--;
@@ -102,7 +89,7 @@ public final class ARCCache {
 		node.appendToTail(headT2);
 	}
 
-	private void onHitB1(Node node, int internalSize, Block block)  {
+	private void onHitB1(Node node, int internalSize)  {
 
 		p = Math.min(maximumSize, p + Math.max(sizeB2 / sizeB1, 1));
 		evict(node);
@@ -114,7 +101,7 @@ public final class ARCCache {
 		node.appendToTail(headT2);
 	}
 
-	private void onHitB2(Node node, int internalSize, Block block) {
+	private void onHitB2(Node node, int internalSize) {
 
 		p = Math.max(0, p - Math.max(sizeB1 / sizeB2, 1));
 		evict(node);
@@ -126,8 +113,7 @@ public final class ARCCache {
 		node.appendToTail(headT2);
 	}
 
-	private void onMiss(String key, int internalSize, Block block) {
-
+	private void onMiss(long key, int internalSize) {
 		Node node = new Node(key);
 		node.type = QueueType.T1;
 
@@ -187,19 +173,19 @@ public final class ARCCache {
 	}
 
 	static final class Node {
-		final String key;
+		final long key;
 
 		Node prev;
 		Node next;
 		QueueType type;
 
 		Node() {
-			this.key = null;
+			this.key = Long.MIN_VALUE;
 			this.prev = this;
 			this.next = this;
 		}
 
-		Node(String key) {
+		Node(long key) {
 			this.key = key;
 		}
 
@@ -214,7 +200,7 @@ public final class ARCCache {
 
 		/** Removes the node from the list. */
 		public void remove() {
-			if(key != null) {
+			if(key != Long.MIN_VALUE) {
 				prev.next = next;
 				next.prev = prev;
 				prev = next = null;

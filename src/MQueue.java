@@ -38,16 +38,13 @@ import java.util.*;
  * @author ben.manes@gmail.com (Ben Manes)
  */
 public final class MQueue {
-	private final SortedMap<String, Node> out;
-	private final HashMap<String, Node> data;
+	private final SortedMap<Long, Node> out;
+	private final HashMap<Long, Node> data;
 	private final long[] threshold;
 	private final int maximumSize;
 	private final long lifetime;
 	private final Node[] headQ;
 	private final int maxOut;
-
-	private final int CACHEBLOCKSIZE = 1048576;
-
 
 	private long totalAccesses;
 	private long totalHits;
@@ -59,8 +56,8 @@ public final class MQueue {
 	public MQueue(int cacheSize) {
 		threshold = new long[10];
 		headQ = new Node[10];
-		out = new TreeMap<String, Node>();
-		data = new HashMap<String, Node>();
+		out = new TreeMap<Long, Node>();
+		data = new HashMap<Long, Node>();
 		maximumSize = cacheSize;
 		lifetime = 16000;
 
@@ -69,7 +66,7 @@ public final class MQueue {
 		maxOut = maximumSize;
 	}
 
-	public boolean accessCache(Block block) {
+	public boolean accessCache(long segmentId) {
 		/*for (int i = 0; i < Math.ceil((double) block.size / (double) CacheSim.CACHE_BLOCK_SIZE); i++) {
 			long internalId = ((int) block.blockId) + ((int) i) * 100000000000L;
 			int internalSize = CacheSim.CACHE_BLOCK_SIZE;
@@ -84,24 +81,10 @@ public final class MQueue {
 			}
 		}*/
 
-		boolean wasHitForAll = true;
-		int nCacheBlocks = (int)Math.ceil((double)block.size / (double)CACHEBLOCKSIZE);
-		for (int i = 0; i < nCacheBlocks; i++) {
-			String cacheBlockId = block.blockId + "_" + i;
-			if (!customInsert(cacheBlockId, CACHEBLOCKSIZE, block)) {
-				wasHitForAll = false;
-			}
-		}
-
-		if (wasHitForAll) {
-			totalHits += nCacheBlocks;
-			totalHitsSize += nCacheBlocks * CACHEBLOCKSIZE;
-		}
-
-		return wasHitForAll;
+		return customInsert(segmentId, CacheSim.CACHE_BLOCK_SIZE);
 	}
 
-	public boolean customInsert(String key, int internalSize, Block block) {
+	public boolean customInsert(long key, int internalSize) {
 		Node node = data.get(key);
 		boolean wasHit = false;
 		if (node == null) {
@@ -115,6 +98,8 @@ public final class MQueue {
 			}*/
 		} else {
 			//if (block.blockOperation == CacheSim.OPERATION_READ) {
+				totalHits++;
+				totalHitsSize += internalSize;
 				wasHit = true;
 			//}
 			node.remove();
@@ -172,7 +157,7 @@ public final class MQueue {
 	}
 
 	static final class Node {
-		final String key;
+		final long key;
 
 		Node prev;
 		Node next;
@@ -180,12 +165,12 @@ public final class MQueue {
 		int queueIndex;
 		long expireTime;
 
-		Node(String key) {
+		Node(long key) {
 			this.key = key;
 		}
 
 		static Node sentinel(int queueIndex) {
-			Node node = new Node("SENTINEL");
+			Node node = new Node(Long.MIN_VALUE);
 			node.expireTime = Long.MAX_VALUE;
 			node.queueIndex = queueIndex;
 			node.prev = node;
@@ -217,7 +202,7 @@ public final class MQueue {
 
 		/** Removes the node from the list. */
 		public void remove() {
-			if (key.equals("SENTINEL")) {
+			if (key != Long.MIN_VALUE) {
 				queueIndex = -1;
 				prev.next = next;
 				next.prev = prev;

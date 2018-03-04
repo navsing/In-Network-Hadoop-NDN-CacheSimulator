@@ -8,7 +8,7 @@ import java.util.Random;
 public class CacheSim {
 
 	//public final static int CACHE_MAX_BLOCKS = 10240;
-	public final static int CACHE_BLOCK_SIZE = 8192;
+	public final static int CACHE_BLOCK_SIZE = 1048576;
 	public final static int TOPOLOGY_NUM_LEAF_NODES = 128;
 	public final static int OPERATION_READ = 0;
 	public final static int OPERATION_WRITE = 1;
@@ -268,63 +268,69 @@ public class CacheSim {
 				}
 			}
 
-			// Run cache over path
-			while (path.size() > 0) {
-				if (b.blockOperation == OPERATION_READ) {
-					int curNode = path.pollLast();
+			// Run cache over path for each segment
+			int nSegments = (int)Math.ceil((double)b.size / (double)CACHE_BLOCK_SIZE);
+			for (int segment = 0; segment < nSegments; segment++) {
+				Deque<Integer> segmentPath = new ArrayDeque<Integer>(path);
+				long cacheId = 100000000000L * segment + b.blockId;
 
-					boolean wasHit = false;
+				while (segmentPath.size() > 0) {
+					if (b.blockOperation == OPERATION_READ) {
+						int curNode = segmentPath.poll();
 
-					int policyName = -1;
-					if (curNode >= coreStart && curNode < aggrStart) {
-						policyName = corePolicyName;
-					}
-					else if (curNode >= aggrStart && curNode < edgeStart) {
-						policyName = aggrPolicyName;
-					}
-					else if (curNode >= edgeStart && curNode < edgeStart + nPods * nAggrPerPod) {
-						policyName = edgePolicyName;
-					}
+						boolean wasHit = false;
 
-					switch(policyName){
-						case 1:
-							wasHit = G.returnVertex(curNode).getLRU().accessCache(b);
-							break;
-						case 2:
-							// TODO: Implement wasHit
-							//wasHit = G.returnVertex(curNode).getLRFU().accessCache(b);
-							break;
-						case 3:
-							// TODO: Implement wasHit
-							//wasHit = G.returnVertex(curNode).getLRU2().accessCache(b);
-							break;
-						case 4:
-							wasHit = G.returnVertex(curNode).getARC().accessCache(b);
-							break;
-						case 5:
-							// TODO: Implement wasHit
-							//wasHit = G.returnVertex(curNode).getTwoQueue().accessCache(b);
-							break;
-						case 6:
-							//G.returnVertex(curNoe).getOPT().accessCache(b);
-							break;
-						case 7:
-							wasHit = G.returnVertex(curNode).getMQ().accessCache(b);
-							break;
-						case 8:
-							wasHit = G.returnVertex(curNode).getLirs().accessCache(b);
-							break;
-						default:
-							System.err.println("Enter the right parameter for cache policy");
-							System.exit(-3);
-					}
+						int policyName = -1;
+						if (curNode >= coreStart && curNode < aggrStart) {
+							policyName = corePolicyName;
+						}
+						else if (curNode >= aggrStart && curNode < edgeStart) {
+							policyName = aggrPolicyName;
+						}
+						else if (curNode >= edgeStart && curNode < edgeStart + nPods * nAggrPerPod) {
+							policyName = edgePolicyName;
+						}
 
-					if (wasHit) {
-						break;
+						switch(policyName){
+							case 1:
+								wasHit = G.returnVertex(curNode).getLRU().accessCache(cacheId);
+								break;
+							case 2:
+								// TODO: Implement wasHit
+								//wasHit = G.returnVertex(curNode).getLRFU().accessCache(b);
+								break;
+							case 3:
+								// TODO: Implement wasHit
+								//wasHit = G.returnVertex(curNode).getLRU2().accessCache(b);
+								break;
+							case 4:
+								wasHit = G.returnVertex(curNode).getARC().accessCache(cacheId);
+								break;
+							case 5:
+								// TODO: Implement wasHit
+								//wasHit = G.returnVertex(curNode).getTwoQueue().accessCache(b);
+								break;
+							case 6:
+								//G.returnVertex(curNoe).getOPT().accessCache(b);
+								break;
+							case 7:
+								wasHit = G.returnVertex(curNode).getMQ().accessCache(cacheId);
+								break;
+							case 8:
+								wasHit = G.returnVertex(curNode).getLirs().accessCache(cacheId);
+								break;
+							default:
+								System.err.println("Enter the right parameter for cache policy");
+								System.exit(-3);
+						}
+
+						if (wasHit) {
+							break;
+						}
 					}
-				}
-				else {
-					System.err.println("Not processing write operations in current implementation");
+					else {
+						System.err.println("Not processing write operations in current implementation");
+					}
 				}
 			}
 		}

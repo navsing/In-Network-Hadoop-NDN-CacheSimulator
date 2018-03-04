@@ -45,7 +45,7 @@ import java.util.*;
  * @author ben.manes@gmail.com (Ben Manes)
  */
 public final class LIRSCache {
-	private final HashMap<String, Node> data;
+	private final HashMap<Long, Node> data;
 	private final List<Object> evicted;
 	private final Node headNR;
 	private final Node headS;
@@ -54,7 +54,6 @@ public final class LIRSCache {
 	private final int maximumNonResidentSize;
 	private final int maximumHotSize;
 	private final int maximumSize;
-	private final int CACHEBLOCKSIZE = 1048576;
 
 	private int sizeS;
 	private int sizeQ;
@@ -71,10 +70,10 @@ public final class LIRSCache {
 	private static final boolean debug = false;
 
 	public LIRSCache(int inputCacheSize) {
-		int cacheSize = inputCacheSize / CACHEBLOCKSIZE;
+		int cacheSize = inputCacheSize / CacheSim.CACHE_BLOCK_SIZE;
 		this.maximumNonResidentSize = cacheSize*5;
 		this.maximumHotSize = (int)(cacheSize*0.9);
-		this.data = new HashMap<String, Node>();
+		this.data = new HashMap<Long, Node>();
 		this.maximumSize = cacheSize;
 		this.evicted = new ArrayList<>();
 		this.headNR = new Node();
@@ -82,7 +81,7 @@ public final class LIRSCache {
 		this.headQ = new Node();
 	}
 
-	public boolean accessCache(Block block) {
+	public boolean accessCache(long segmentId) {
 		/*for (int i = 0; i < Math.ceil((double) block.size / (double) CacheSim.CACHE_BLOCK_SIZE); i++) {
 			long internalId = ((int) block.blockId) + ((int) i) * 100000000000L;
 			int internalSize = CacheSim.CACHE_BLOCK_SIZE;
@@ -97,24 +96,10 @@ public final class LIRSCache {
 			}
 		}*/
 
-		boolean wasHitForAll = true;
-		int nCacheBlocks = (int)Math.ceil((double)block.size / (double)CACHEBLOCKSIZE);
-		for (int i = 0; i < nCacheBlocks; i++) {
-			String cacheBlockId = block.blockId + "_" + i;
-			if (!customInsert(cacheBlockId, CACHEBLOCKSIZE, block)) {
-				wasHitForAll = false;
-			}
-		}
-
-		if (wasHitForAll) {
-			totalHits += nCacheBlocks;
-			totalHitsSize += nCacheBlocks * CACHEBLOCKSIZE;
-		}
-
-		return wasHitForAll;
+		return customInsert(segmentId, CacheSim.CACHE_BLOCK_SIZE);
 	}
 
-	public boolean customInsert(String key, int internalSize, Block block) {
+	public boolean customInsert(long key, int internalSize) {
 		totalAccesses++;
 		totalSize += internalSize;
 		Node node = data.get(key);
@@ -125,15 +110,15 @@ public final class LIRSCache {
 			onNonResidentHir(node);
 		}
 		else if (node.status == Status.LIR) {
-			if (block.blockOperation == CacheSim.OPERATION_READ) {
-				wasHit = true;
-			}
+			totalHits++;
+			totalHitsSize += internalSize;
+			wasHit = true;
 			onLir(node);
 		}
 		else if (node.status == Status.HIR_RESIDENT) {
-			if (block.blockOperation == CacheSim.OPERATION_READ) {
-				wasHit = true;
-			}
+			totalHits++;
+			totalHitsSize += internalSize;
+			wasHit = true;
 			onResidentHir(node);
 		}
 		else if (node.status == Status.HIR_NON_RESIDENT) {
@@ -382,7 +367,7 @@ public final class LIRSCache {
 	// residence status,
 	// indicating whether or not the block resides in the cache.
 	final class Node {
-		final String key;
+		final long key;
 
 		Status status;
 
@@ -398,18 +383,18 @@ public final class LIRSCache {
 		boolean isInNR;
 
 		Node() {
-			key = null;
+			key = Long.MIN_VALUE;
 			prevS = nextS = this;
 			prevQ = nextQ = this;
 			prevNR = nextNR = this;
 		}
 
-		Node(String key) {
+		Node(long key) {
 			this.key = key;
 		}
 
 		public boolean isInStack(StackType stackType) {
-			if (key!=null) {
+			if (key!=Long.MIN_VALUE) {
 				if (stackType == StackType.S) {
 					return isInS;
 				} else if (stackType == StackType.Q) {

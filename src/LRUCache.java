@@ -6,7 +6,6 @@ import java.util.*;
 public class LRUCache extends LinkedHashMap {
 
 	private static final long serialVersionUID = 1L;
-	private final int CACHEBLOCKSIZE = 1048576;
 	private int cacheSize;
 	private long totalAccesses;
 	private long totalHits;
@@ -29,7 +28,7 @@ public class LRUCache extends LinkedHashMap {
 		return countOfSize >= (long)cacheSize * 1024 * 1024;
 	}
 
-	public boolean accessCache(Block block) {
+	public boolean accessCache(long segmentId) {
 			/*for (int i = 0; i < Math.ceil((double)block.size / (double)CacheSim.CACHE_BLOCK_SIZE); i++) {
 				long internalId = ((int) block.blockId) + ((int) i) * 100000000000L;
 				int internalSize = CacheSim.CACHE_BLOCK_SIZE;
@@ -39,29 +38,15 @@ public class LRUCache extends LinkedHashMap {
 				customInsert(internalId, internalSize, block);
 
 			}*/
-			boolean wasHitForAll = true;
-			int nCacheBlocks = (int)Math.ceil((double)block.size / (double)CACHEBLOCKSIZE);
-			for (int i = 0; i < nCacheBlocks; i++) {
-				String cacheBlockId = block.blockId + "_" + i;
-				if (!customInsert(cacheBlockId, CACHEBLOCKSIZE, block)) {
-					wasHitForAll = false;
-				}
-			}
-
-			if (wasHitForAll) {
-				totalHits += nCacheBlocks;
-				totalHitsSize += nCacheBlocks * CACHEBLOCKSIZE;
-			}
-
-			return wasHitForAll;
+			return customInsert(segmentId, CacheSim.CACHE_BLOCK_SIZE);
 	}
 
-	private boolean customInsert(String id, int internalSize, Block block) {
+	private boolean customInsert(long id, int internalSize) {
 		boolean wasHit = false;
-		if (remove(id)!= null) {
-			if (block.blockOperation == CacheSim.OPERATION_READ) {
-				wasHit = true;
-			}
+		if(remove(id) != null) {
+			totalHits++;
+			totalHitsSize += internalSize;
+			wasHit = true;
 		}
 
 		put(id, internalSize);
