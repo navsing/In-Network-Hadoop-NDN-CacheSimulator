@@ -65,7 +65,7 @@ public class CacheSim {
 		int CACHE_MAX_MBLOCKS = Integer.parseInt(args[5]);
 
 		// Set prng seed (if specified)
-		if (args.length == 6) {
+		if (args.length > 7) {
 			long seed = Long.parseLong(args[7]);
 			rand.setSeed(seed);
 		}
