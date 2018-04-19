@@ -8,24 +8,24 @@ import java.util.Random;
 public class CacheSim {
 
 	//public final static int CACHE_MAX_BLOCKS = 10240;
-	public final static int CACHE_BLOCK_SIZE = 1048576;
-	public final static int TOPOLOGY_NUM_LEAF_NODES = 128;
+	public static int CACHE_BLOCK_SIZE = 1048576;
+	public final static int TOPOLOGY_NUM_LEAF_NODES = 129;
 	public final static int OPERATION_READ = 0;
 	public final static int OPERATION_WRITE = 1;
 	public final static int OPERATION_REMOVE = 2;
 
-	static int[] lookupTable = new int[128];
+	static int[] lookupTable = new int[129];
 	static Random rand = new Random();
 
 	public static int getOrAssignHostId(int host) {
-		for (int i = 0; i < 128; i++) {
+		for (int i = 0; i < 129; i++) {
 			if (lookupTable[i] == host) {
 				return i;
 			}
 		}
 
 		while (true) {
-			int i = rand.nextInt(128);
+			int i = rand.nextInt(129);
 			if (lookupTable[i] == 0) {
 				lookupTable[i] = host;
 				return i;
@@ -47,32 +47,37 @@ public class CacheSim {
 	}
 
 	public static void main(String[] args) {
-		if (args.length < 7 || args.length > 8) {
+		//if (args.length < 7 || args.length > 8) {
+		if (args.length < 5 || args.length > 6) {
 			System.err.println("Usage: ");
-			System.err.println("java CacheSim [topology] [inLogFile] [edgePolicyName] [aggrPolicyName] [corePolicyName] [cacheMaxBlocks] [fatTreeK] (randSeed)");
+			//System.err.println("java CacheSim [topology] [inLogFile] [edgePolicyName] [aggrPolicyName] [corePolicyName] [cacheMaxBlocks] [fatTreeK] (randSeed)");
+			System.err.println("java CacheSim [topology] [inLogFile] [policyName] [cacheBlockSize] [cacheMaxBlocks] (randSeed)");
 			System.exit(-1);
 		}
 
 		int blockOperation;
 		int blockId;
 		int size;
+		int offset;
 		int src;
 		int dest;
 
 		//Queue<Block> cache = new Queue<Block>();
 		Block b;
 
-		int CACHE_MAX_MBLOCKS = Integer.parseInt(args[5]);
+		CACHE_BLOCK_SIZE = Integer.parseInt(args[3]);
+		int CACHE_MAX_MBLOCKS = Integer.parseInt(args[4]);
 
 		// Set prng seed (if specified)
-		if (args.length > 7) {
-			long seed = Long.parseLong(args[7]);
+		if (args.length > 5) {
+			long seed = Long.parseLong(args[5]);
 			rand.setSeed(seed);
 		}
 
 		// Topology values
-		final int NUM_NODES = 128;
-		int fatTreeK = Integer.parseInt(args[6]);
+		final int NUM_NODES = 129;
+		int numRouters = 1;
+		/*int fatTreeK = Integer.parseInt(args[6]);
 		int podSize = (int)Math.pow(fatTreeK / 2, 2);
 		int nPods = NUM_NODES / podSize;
 		int nEdgePerPod = fatTreeK / 2;
@@ -81,7 +86,7 @@ public class CacheSim {
 		int numRouters = nPods * (nEdgePerPod + nAggrPerPod) + nCore;
 		int coreStart = 0;
 		int aggrStart = coreStart + nCore;
-		int edgeStart = aggrStart + nAggrPerPod * nPods;
+		int edgeStart = aggrStart + nAggrPerPod * nPods;*/
 		/*int edgeStart = NUM_NODES;
 		int aggrStart = edgeStart + nEdgePerPod * nPods;
 		int coreStart = aggrStart + nAggrPerPod * nPods;*/
@@ -89,9 +94,10 @@ public class CacheSim {
 		In topology = new In(args[0]);
 		Graph G = new Graph(topology, CACHE_MAX_MBLOCKS);
 		In inLogFile = new In(args[1]);
-		int edgePolicyName = Integer.parseInt(args[2]);
+		int policyName = Integer.parseInt(args[2]);
+		/*int edgePolicyName = Integer.parseInt(args[2]);
 		int aggrPolicyName = Integer.parseInt(args[3]);
-		int corePolicyName = Integer.parseInt(args[4]);
+		int corePolicyName = Integer.parseInt(args[4]);*/
 		//int numRouters = Integer.parseInt(args[4]);
 
 		while (inLogFile.hasNextLine()) {
@@ -104,10 +110,11 @@ public class CacheSim {
 			}
 			blockId = Integer.parseInt(meta[2]);
 			size = Integer.parseInt(meta[3]);
-			src = Integer.parseInt(meta[4]);
-			dest = Integer.parseInt(meta[5]);
+			offset = Integer.parseInt(meta[4]);
+			src = Integer.parseInt(meta[5]);
+			dest = Integer.parseInt(meta[6]);
 
-			b = new Block(blockOperation, blockId, size, src, dest);
+			b = new Block(blockOperation, blockId, size, offset, src, dest);
 			b.src = getOrAssignHostId(src) + numRouters;
 			b.dest = getOrAssignHostId(dest) + numRouters;
 
@@ -136,7 +143,7 @@ public class CacheSim {
 				continue;
 			}
 
-			Deque<Integer> path = new ArrayDeque<Integer>();
+			/*Deque<Integer> path = new ArrayDeque<Integer>();
 
 			// Run operation across topology
 			int srcPod = (b.src - numRouters) / podSize;
@@ -266,70 +273,43 @@ public class CacheSim {
 					e.printStackTrace();
 					System.exit(-2);
 				}
-			}
+			}*/
 
-			// Run cache over path for each segment
-			int nSegments = (int)Math.ceil((double)b.size / (double)CACHE_BLOCK_SIZE);
-			for (int segment = 0; segment < nSegments; segment++) {
-				Deque<Integer> segmentPath = new ArrayDeque<Integer>(path);
-				long cacheId = 100000000000L * segment + b.blockId;
-
-				while (segmentPath.size() > 0) {
-					if (b.blockOperation == OPERATION_READ) {
-						int curNode = segmentPath.poll();
-
-						boolean wasHit = false;
-
-						int policyName = -1;
-						if (curNode >= coreStart && curNode < aggrStart) {
-							policyName = corePolicyName;
-						}
-						else if (curNode >= aggrStart && curNode < edgeStart) {
-							policyName = aggrPolicyName;
-						}
-						else if (curNode >= edgeStart && curNode < edgeStart + nPods * nAggrPerPod) {
-							policyName = edgePolicyName;
-						}
-
-						switch(policyName){
-							case 1:
-								wasHit = G.returnVertex(curNode).getLRU().accessCache(cacheId);
-								break;
-							case 2:
-								// TODO: Implement wasHit
-								//wasHit = G.returnVertex(curNode).getLRFU().accessCache(b);
-								break;
-							case 3:
-								// TODO: Implement wasHit
-								//wasHit = G.returnVertex(curNode).getLRU2().accessCache(b);
-								break;
-							case 4:
-								wasHit = G.returnVertex(curNode).getARC().accessCache(cacheId);
-								break;
-							case 5:
-								// TODO: Implement wasHit
-								//wasHit = G.returnVertex(curNode).getTwoQueue().accessCache(b);
-								break;
-							case 6:
-								//G.returnVertex(curNoe).getOPT().accessCache(b);
-								break;
-							case 7:
-								wasHit = G.returnVertex(curNode).getMQ().accessCache(cacheId);
-								break;
-							case 8:
-								wasHit = G.returnVertex(curNode).getLirs().accessCache(cacheId);
-								break;
-							default:
-								System.err.println("Enter the right parameter for cache policy");
-								System.exit(-3);
-						}
-
-						if (wasHit) {
+			if (b.blockOperation == OPERATION_READ) {
+				// Run cache over path for each segment
+				int firstSegment = (int)Math.floor((double)b.offset / (double)CACHE_BLOCK_SIZE);
+				int lastSegment = (int)Math.floor((double)(b.offset + b.size) / (double)CACHE_BLOCK_SIZE);
+				//System.out.println(b.blockId + " - " + b.offset + " to " + (b.offset + b.size) + " / " + firstSegment + " to " + lastSegment);
+				for (int segment = firstSegment; segment <= lastSegment; segment++) {
+					long cacheId = 100000000000L * segment + b.blockId;
+					switch(policyName){
+						case 1:
+							G.returnVertex(0).getLRU().accessCache(cacheId);
 							break;
-						}
-					}
-					else {
-						System.err.println("Not processing write operations in current implementation");
+						case 2:
+							//G.returnVertex(0).getLRFU().accessCache(b);
+							break;
+						case 3:
+							//G.returnVertex(0).getLRU2().accessCache(b);
+							break;
+						case 4:
+							G.returnVertex(0).getARC().accessCache(cacheId);
+							break;
+						case 5:
+							//G.returnVertex(0).getTwoQueue().accessCache(b);
+							break;
+						case 6:
+							//G.returnVertex(0).getOPT().accessCache(b);
+							break;
+						case 7:
+							G.returnVertex(0).getMQ().accessCache(cacheId);
+							break;
+						case 8:
+							G.returnVertex(0).getLirs().accessCache(cacheId);
+							break;
+						default:
+							System.err.println("Enter the right parameter for cache policy");
+							System.exit(-3);
 					}
 				}
 			}
@@ -386,7 +366,37 @@ public class CacheSim {
 			}
 		}*/
 
-		System.out.println("Core:");
+		switch(policyName){
+		case 1:
+			G.returnVertex(0).getLRU().report();
+			break;
+		case 2:
+			G.returnVertex(0).getLRFU().report();
+			break;
+		case 3:
+			G.returnVertex(0).getLRU2().report();
+			break;
+		case 4:
+			//System.out.println("ARC");
+			G.returnVertex(0).getARC().report();
+			break;
+		case 5:
+			G.returnVertex(0).getTwoQueue().report();
+			break;
+		case 6:
+			//G.returnVertex(0).getOPT().report();
+			break;
+		case 7:
+			G.returnVertex(0).getMQ().report();
+			break;
+		case 8:
+			G.returnVertex(0).getLirs().report();
+			break;
+		default:
+			System.out.println("Enter the right parameter for cache policy");
+		}
+
+		/*System.out.println("Core:");
 		for(int i = coreStart; i < nCore; i++){
 			switch(corePolicyName){
 			case 1:
@@ -485,6 +495,6 @@ public class CacheSim {
 			default:
 				System.out.println("Enter the right parameter for cache policy");
 			}
-		}
+		}*/
 	}
 }
