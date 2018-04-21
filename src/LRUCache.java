@@ -1,62 +1,41 @@
-import java.beans.Customizer;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.*;
+import java.util.ArrayDeque;
 
-public class LRUCache extends LinkedHashMap {
+public class LRUCache {
+  private int cacheSize;
+  private ArrayDeque<Long> queue;
 
-	private static final long serialVersionUID = 1L;
-	private int cacheSize;
-	private long totalAccesses;
-	private long totalHits;
-	private long totalSize;
-	private long totalHitsSize;
-	private long hashmapSize;
+  private long totalAccesses;
+  private long totalHits;
+  private long totalSize;
+  private long totalHitsSize;
 
-	public LRUCache(int cacheSize) {
-		super((int)(cacheSize * 1024L * 1024L / CacheSim.CACHE_BLOCK_SIZE), (float) 0.75, true);
-		this.cacheSize = cacheSize;
-	}
+  public LRUCache(int cacheSize) {
+    this.cacheSize = cacheSize;
+    this.queue = new ArrayDeque<Long>();
+  }
 
-	protected boolean removeEldestEntry(Map.Entry eldest) {
-		long countOfSize = 0;
-		Iterator it = entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry pair = (Map.Entry) it.next();
-               		countOfSize += (int) pair.getValue();
-		}
-		return countOfSize >= (long)cacheSize * 1024 * 1024;
-	}
+  public boolean accessCache(long segmentId) {
+    totalAccesses++;
+    totalSize += CacheSim.CACHE_BLOCK_SIZE;
 
-	public boolean accessCache(long segmentId) {
-			/*for (int i = 0; i < Math.ceil((double)block.size / (double)CacheSim.CACHE_BLOCK_SIZE); i++) {
-				long internalId = ((int) block.blockId) + ((int) i) * 100000000000L;
-				int internalSize = CacheSim.CACHE_BLOCK_SIZE;
-				if ((i + 1) * CacheSim.CACHE_BLOCK_SIZE > block.size) {
-					internalSize = block.size - (i * CacheSim.CACHE_BLOCK_SIZE);
-				}
-				customInsert(internalId, internalSize, block);
+    boolean wasHit = false;
+    if (queue.remove(segmentId)) {
+      wasHit = true;
+      totalHits++;
+      totalHitsSize += CacheSim.CACHE_BLOCK_SIZE;
+    }
 
-			}*/
-			return customInsert(segmentId, CacheSim.CACHE_BLOCK_SIZE);
-	}
+    if (queue.size() == cacheSize) {
+      // Remove first element
+      queue.removeFirst();
+    }
 
-	private boolean customInsert(long id, int internalSize) {
-		boolean wasHit = false;
-		if(remove(id) != null) {
-			totalHits++;
-			totalHitsSize += internalSize;
-			wasHit = true;
-		}
+    queue.addLast(segmentId);
 
-		put(id, internalSize);
-		totalAccesses++;
-		totalSize += internalSize;
+    return wasHit;
+  }
 
-		return wasHit;
-	}
-
-	public void report(){
+  public void report() {
 		if (totalAccesses == 0){
 			System.out.println("No Activity");
 		}

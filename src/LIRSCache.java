@@ -70,7 +70,7 @@ public final class LIRSCache {
 	private static final boolean debug = false;
 
 	public LIRSCache(int inputCacheSize) {
-		int cacheSize = (int)(inputCacheSize * 1024L * 1024L / CacheSim.CACHE_BLOCK_SIZE);
+		int cacheSize = inputCacheSize;
 		this.maximumNonResidentSize = cacheSize*5;
 		this.maximumHotSize = (int)(cacheSize*0.9);
 		this.data = new HashMap<Long, Node>();
