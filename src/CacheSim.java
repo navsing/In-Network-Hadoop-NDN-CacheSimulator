@@ -9,23 +9,27 @@ public class CacheSim {
 
 	//public final static int CACHE_MAX_BLOCKS = 10240;
 	public static int CACHE_BLOCK_SIZE = 1048576;
-	public final static int TOPOLOGY_NUM_LEAF_NODES = 129;
+	public static int NAME_NODE = -1;
 	public final static int OPERATION_READ = 0;
 	public final static int OPERATION_WRITE = 1;
 	public final static int OPERATION_REMOVE = 2;
 
-	static int[] lookupTable = new int[129];
+	static int[] lookupTable = new int[128];
 	static Random rand = new Random();
 
 	public static int getOrAssignHostId(int host) {
-		for (int i = 0; i < 129; i++) {
+		if (host == NAME_NODE) {
+			return 128;
+		}
+
+		for (int i = 0; i < 128; i++) {
 			if (lookupTable[i] == host) {
 				return i;
 			}
 		}
 
 		while (true) {
-			int i = rand.nextInt(129);
+			int i = rand.nextInt(128);
 			if (lookupTable[i] == 0) {
 				lookupTable[i] = host;
 				return i;
@@ -48,10 +52,10 @@ public class CacheSim {
 
 	public static void main(String[] args) {
 		//if (args.length < 7 || args.length > 8) {
-		if (args.length < 5 || args.length > 6) {
+		if (args.length < 5 || args.length > 7) {
 			System.err.println("Usage: ");
 			//System.err.println("java CacheSim [topology] [inLogFile] [edgePolicyName] [aggrPolicyName] [corePolicyName] [cacheMaxBlocks] [fatTreeK] (randSeed)");
-			System.err.println("java CacheSim [topology] [inLogFile] [policyName] [cacheBlockSize] [cacheMaxBlocks] (randSeed)");
+			System.err.println("java CacheSim [topology] [inLogFile] [policyName] [cacheBlockSize] [cacheMaxBlocks] (randSeed) (nameNode)");
 			System.exit(-1);
 		}
 
@@ -74,10 +78,15 @@ public class CacheSim {
 			rand.setSeed(seed);
 		}
 
+		if (args.length > 6) {
+			NAME_NODE = Integer.parseInt(args[6]);
+		}
+
 		// Topology values
-		final int NUM_NODES = 129;
-		int numRouters = 1;
-		/*int fatTreeK = Integer.parseInt(args[6]);
+		final int NUM_NODES = 128;
+		//int numRouters = 1;
+		//int fatTreeK = Integer.parseInt(args[6]);
+		int fatTreeK = 8;
 		int podSize = (int)Math.pow(fatTreeK / 2, 2);
 		int nPods = NUM_NODES / podSize;
 		int nEdgePerPod = fatTreeK / 2;
@@ -86,7 +95,7 @@ public class CacheSim {
 		int numRouters = nPods * (nEdgePerPod + nAggrPerPod) + nCore;
 		int coreStart = 0;
 		int aggrStart = coreStart + nCore;
-		int edgeStart = aggrStart + nAggrPerPod * nPods;*/
+		int edgeStart = aggrStart + nAggrPerPod * nPods;
 		/*int edgeStart = NUM_NODES;
 		int aggrStart = edgeStart + nEdgePerPod * nPods;
 		int coreStart = aggrStart + nAggrPerPod * nPods;*/
@@ -143,7 +152,17 @@ public class CacheSim {
 				continue;
 			}
 
-			/*Deque<Integer> path = new ArrayDeque<Integer>();
+			Deque<Integer> path = new ArrayDeque<Integer>();
+
+			if (b.dest == numRouters + NUM_NODES) {
+				// The NameNode is added onto the first edge switch of the first pod since there are 129 nodes
+				if (b.src == numRouters) {
+					b.dest = numRouters + 1;
+				}
+				else {
+					b.dest = numRouters;
+				}
+			}
 
 			// Run operation across topology
 			int srcPod = (b.src - numRouters) / podSize;
@@ -273,43 +292,69 @@ public class CacheSim {
 					e.printStackTrace();
 					System.exit(-2);
 				}
-			}*/
+			}
 
 			if (b.blockOperation == OPERATION_READ) {
 				// Run cache over path for each segment
 				int firstSegment = (int)Math.floor((double)b.offset / (double)CACHE_BLOCK_SIZE);
-				int lastSegment = (int)Math.floor((double)(b.offset + b.size) / (double)CACHE_BLOCK_SIZE);
+				//int lastSegment = (int)Math.floor((double)(b.offset + b.size) / (double)CACHE_BLOCK_SIZE);
+				int lastSegment = (int)Math.floor((double)(b.size + b.offset - 1) / (double)CACHE_BLOCK_SIZE);
 				//System.out.println(b.blockId + " - " + b.offset + " to " + (b.offset + b.size) + " / " + firstSegment + " to " + lastSegment);
 				for (int segment = firstSegment; segment <= lastSegment; segment++) {
 					long cacheId = 100000000000L * segment + b.blockId;
-					switch(policyName){
-						case 1:
-							G.returnVertex(0).getLRU().accessCache(cacheId);
+					Deque<Integer> segmentPath = new ArrayDeque(path);
+					while (segmentPath.size() > 0) {
+						int curNode = segmentPath.removeLast();
+						boolean wasHit = false;
+						switch (policyName) {
+							case 1:
+								wasHit = G.returnVertex(curNode).getLRU().accessCache(cacheId);
+								break;
+							case 2:
+								//G.returnVertex(0).getLRFU().accessCache(b);
+								break;
+							case 3:
+								//G.returnVertex(0).getLRU2().accessCache(b);
+								break;
+							case 4:
+								wasHit = G.returnVertex(curNode).getARC().accessCache(cacheId);
+								break;
+							case 5:
+								//G.returnVertex(0).getTwoQueue().accessCache(b);
+								break;
+							case 6:
+								//G.returnVertex(0).getOPT().accessCache(b);
+								break;
+							case 7:
+								wasHit = G.returnVertex(curNode).getMQ().accessCache(cacheId);
+								break;
+							case 8:
+								wasHit = G.returnVertex(curNode).getLirs().accessCache(cacheId);
+								break;
+							case 9:
+								wasHit = G.returnVertex(curNode).getUnlimited().accessCache(cacheId);
+								break;
+							default:
+								System.err.println("Enter the right parameter for cache policy");
+								System.exit(-3);
+						}
+
+						if (wasHit) {
+							/*System.out.print("Hit on ");
+							if (curNode >= coreStart && curNode < aggrStart) {
+								System.out.println("CORE");
+							}
+							else if (curNode >= aggrStart && curNode < edgeStart) {
+								System.out.println("AGGREGATION");
+							}
+							else if (curNode >= edgeStart && curNode < edgeStart + (nPods * nEdgePerPod)) {
+								System.out.println("EDGE");
+							}
+							else {
+								System.out.println("INVALID");
+							}*/
 							break;
-						case 2:
-							//G.returnVertex(0).getLRFU().accessCache(b);
-							break;
-						case 3:
-							//G.returnVertex(0).getLRU2().accessCache(b);
-							break;
-						case 4:
-							G.returnVertex(0).getARC().accessCache(cacheId);
-							break;
-						case 5:
-							//G.returnVertex(0).getTwoQueue().accessCache(b);
-							break;
-						case 6:
-							//G.returnVertex(0).getOPT().accessCache(b);
-							break;
-						case 7:
-							G.returnVertex(0).getMQ().accessCache(cacheId);
-							break;
-						case 8:
-							G.returnVertex(0).getLirs().accessCache(cacheId);
-							break;
-						default:
-							System.err.println("Enter the right parameter for cache policy");
-							System.exit(-3);
+						}
 					}
 				}
 			}
@@ -366,7 +411,7 @@ public class CacheSim {
 			}
 		}*/
 
-		switch(policyName){
+		/*switch(policyName){
 		case 1:
 			G.returnVertex(0).getLRU().report();
 			break;
@@ -394,11 +439,11 @@ public class CacheSim {
 			break;
 		default:
 			System.out.println("Enter the right parameter for cache policy");
-		}
+		}*/
 
-		/*System.out.println("Core:");
+		System.out.println("Core:");
 		for(int i = coreStart; i < nCore; i++){
-			switch(corePolicyName){
+			switch(policyName){
 			case 1:
 				G.returnVertex(i).getLRU().report();
 				break;
@@ -423,6 +468,9 @@ public class CacheSim {
 				break;
 			case 8:
 				G.returnVertex(i).getLirs().report();
+				break;
+			case 9:
+				G.returnVertex(i).getUnlimited().report();
 				break;
 			default:
 				System.out.println("Enter the right parameter for cache policy");
@@ -432,7 +480,7 @@ public class CacheSim {
 		System.out.println();
 		System.out.println("Aggregation:");
 		for(int i = aggrStart; i < aggrStart + nAggrPerPod * nPods; i++){
-			switch(aggrPolicyName){
+			switch(policyName){
 			case 1:
 				G.returnVertex(i).getLRU().report();
 				break;
@@ -457,6 +505,9 @@ public class CacheSim {
 				break;
 			case 8:
 				G.returnVertex(i).getLirs().report();
+				break;
+			case 9:
+				G.returnVertex(i).getUnlimited().report();
 				break;
 			default:
 				System.out.println("Enter the right parameter for cache policy");
@@ -466,7 +517,7 @@ public class CacheSim {
 		System.out.println();
 		System.out.println("Edge:");
 		for(int i = edgeStart; i < edgeStart + nEdgePerPod * nPods; i++){
-			switch(edgePolicyName){
+			switch(policyName){
 			case 1:
 				G.returnVertex(i).getLRU().report();
 				break;
@@ -492,9 +543,12 @@ public class CacheSim {
 			case 8:
 				G.returnVertex(i).getLirs().report();
 				break;
+			case 9:
+				G.returnVertex(i).getUnlimited().report();
+				break;
 			default:
 				System.out.println("Enter the right parameter for cache policy");
 			}
-		}*/
+		}
 	}
 }

@@ -478,7 +478,7 @@ public final class LIRSCache {
 	}
 	public void report() {
 		if (totalAccesses == 0){
-			System.out.println("No Activity");
+			System.out.println("0,0,0,0,0,0");
 		}
 		else {
 			System.out.print(totalAccesses + "," + totalHits + ",");

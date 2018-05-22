@@ -1,38 +1,30 @@
-import java.util.ArrayDeque;
+import java.util.HashSet;
 
-public class LRUCache {
-  private int cacheSize;
-  private ArrayDeque<Long> queue;
+public class UnlimitedCache {
+  private HashSet<Long> blocks;
 
   private long totalAccesses;
   private long totalHits;
   private long totalSize;
   private long totalHitsSize;
 
-  public LRUCache(int cacheSize) {
-    this.cacheSize = cacheSize;
-    this.queue = new ArrayDeque<Long>();
+  public UnlimitedCache(int cacheSize) {
+    this.blocks = new HashSet<Long>();
   }
 
   public boolean accessCache(long segmentId) {
     totalAccesses++;
     totalSize += CacheSim.CACHE_BLOCK_SIZE;
 
-    boolean wasHit = false;
-    if (queue.remove(segmentId)) {
-      wasHit = true;
+    if (blocks.contains(segmentId)) {
       totalHits++;
       totalHitsSize += CacheSim.CACHE_BLOCK_SIZE;
+      return true;
     }
-
-    if (queue.size() == cacheSize) {
-      // Remove first element
-      queue.removeFirst();
+    else {
+      blocks.add(segmentId);
+      return false;
     }
-
-    queue.addLast(segmentId);
-
-    return wasHit;
   }
 
   public void report() {

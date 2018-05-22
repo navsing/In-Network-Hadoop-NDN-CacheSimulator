@@ -5,7 +5,7 @@
  *
  *  A generic bag or multiset, implemented using a singly-linked list.
  *
- *  % more tobe.txt 
+ *  % more tobe.txt
  *  to be or not to - be - - that - - - is
  *
  *  % java Bag < tobe.txt
@@ -34,8 +34,8 @@ import java.util.NoSuchElementException;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
 
 /**
- *  The {@code Bag} class represents a bag (or multiset) of 
- *  generic items. It supports insertion and iterating over the 
+ *  The {@code Bag} class represents a bag (or multiset) of
+ *  generic items. It supports insertion and iterating over the
  *  items in arbitrary order.
  *  <p>
  *  This implementation uses a singly-linked list with a static nested class Node.
@@ -68,9 +68,10 @@ public class Bag<Item> implements Iterable<Item> {
         //OPT opt;
         MQueue mq;
         LIRSCache lirs;
+        UnlimitedCache unlimited;
     }
 
-    
+
     int maxCacheSize;
     /**
      * Initializes an empty bag.
@@ -91,37 +92,41 @@ public class Bag<Item> implements Iterable<Item> {
         return first == null;
     }
 
-    
+
     public LRUCache getLRU(){
     	return first.lru;
     }
-    
+
     public LRFUCache getLRFU(){
     	return first.lrfu;
     }
-    
+
     public LRU2 getLRU2(){
     	return first.lru2;
     }
-    
+
     public ARCCache getARC(){
     	return first.arc;
     }
-    
+
     public TwoQueues getTwoQueue(){
     	return first.twoQueue;
     }
-    
+
     /*public OPT getOPT(){
     	return first.opt;
     }*/
-    
+
     public MQueue getMQ(){
     	return first.mq;
     }
-    
+
     public LIRSCache getLirs(){
     	return first.lirs;
+    }
+
+    public UnlimitedCache getUnlimited() {
+      return first.unlimited;
     }
     /**
      * Returns the number of items in this bag.
@@ -149,6 +154,7 @@ public class Bag<Item> implements Iterable<Item> {
         //first.opt = new OPT(maxCacheSize);
         first.mq = new MQueue(maxCacheSize);
         first.lirs = new LIRSCache(maxCacheSize);
+        first.unlimited = new UnlimitedCache(maxCacheSize);
         first.next = oldfirst;
         n++;
     }
@@ -160,7 +166,7 @@ public class Bag<Item> implements Iterable<Item> {
      * @return an iterator that iterates over the items in this bag in arbitrary order
      */
     public Iterator<Item> iterator()  {
-        return new ListIterator<Item>(first);  
+        return new ListIterator<Item>(first);
     }
 
     // an iterator, doesn't implement remove() since it's optional
@@ -177,7 +183,7 @@ public class Bag<Item> implements Iterable<Item> {
         public Item next() {
             if (!hasNext()) throw new NoSuchElementException();
             Item item = current.item;
-            current = current.next; 
+            current = current.next;
             return item;
         }
     }
