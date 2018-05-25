@@ -10,6 +10,7 @@ public class CacheSim {
 	//public final static int CACHE_MAX_BLOCKS = 10240;
 	public static int CACHE_BLOCK_SIZE = 1048576;
 	public static int NAME_NODE = -1;
+	public static long totalTrafficBytes = 0;
 	public final static int OPERATION_READ = 0;
 	public final static int OPERATION_WRITE = 1;
 	public final static int OPERATION_REMOVE = 2;
@@ -47,6 +48,13 @@ public class CacheSim {
 		if (!hasAdjacency) {
 			System.err.println("Invalid: " + node + " to " + test);
 			throw new Exception("ADJACENCY ERROR: Check algorithm");
+		}
+	}
+
+	public static void assertNoOverflow(long oldVal, long newVal) {
+		if (oldVal >= newVal) {
+			System.err.println("OVERFLOW: " + oldVal + " -> " + newVal);
+			System.exit(-4);
 		}
 	}
 
@@ -303,9 +311,12 @@ public class CacheSim {
 				for (int segment = firstSegment; segment <= lastSegment; segment++) {
 					long cacheId = 100000000000L * segment + b.blockId;
 					Deque<Integer> segmentPath = new ArrayDeque(path);
+					boolean wasHit = false;
 					while (segmentPath.size() > 0) {
 						int curNode = segmentPath.removeLast();
-						boolean wasHit = false;
+						long oldTrafficBytes = totalTrafficBytes;
+						totalTrafficBytes += CACHE_BLOCK_SIZE; // Add before reaching node
+						assertNoOverflow(oldTrafficBytes, totalTrafficBytes);
 						switch (policyName) {
 							case 1:
 								wasHit = G.returnVertex(curNode).getLRU().accessCache(cacheId);
@@ -334,6 +345,9 @@ public class CacheSim {
 							case 9:
 								wasHit = G.returnVertex(curNode).getUnlimited().accessCache(cacheId);
 								break;
+							case 10:
+								wasHit = G.returnVertex(curNode).getNoCache().accessCache(cacheId);
+								break;
 							default:
 								System.err.println("Enter the right parameter for cache policy");
 								System.exit(-3);
@@ -355,6 +369,13 @@ public class CacheSim {
 							}*/
 							break;
 						}
+					}
+
+					if (!wasHit) {
+						// Missed all the way to the DataNode, so add traffic from edge to storing DataNode
+						long oldTrafficBytes = totalTrafficBytes;
+						totalTrafficBytes += CACHE_BLOCK_SIZE;
+						assertNoOverflow(oldTrafficBytes, totalTrafficBytes);
 					}
 				}
 			}
@@ -472,6 +493,9 @@ public class CacheSim {
 			case 9:
 				G.returnVertex(i).getUnlimited().report();
 				break;
+			case 10:
+				G.returnVertex(i).getNoCache().report();
+				break;
 			default:
 				System.out.println("Enter the right parameter for cache policy");
 			}
@@ -508,6 +532,9 @@ public class CacheSim {
 				break;
 			case 9:
 				G.returnVertex(i).getUnlimited().report();
+				break;
+			case 10:
+				G.returnVertex(i).getNoCache().report();
 				break;
 			default:
 				System.out.println("Enter the right parameter for cache policy");
@@ -546,9 +573,14 @@ public class CacheSim {
 			case 9:
 				G.returnVertex(i).getUnlimited().report();
 				break;
+			case 10:
+				G.returnVertex(i).getNoCache().report();
+				break;
 			default:
 				System.out.println("Enter the right parameter for cache policy");
 			}
 		}
+
+		System.err.println(totalTrafficBytes);
 	}
 }

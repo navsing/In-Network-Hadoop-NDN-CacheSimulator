@@ -69,6 +69,7 @@ public class Bag<Item> implements Iterable<Item> {
         MQueue mq;
         LIRSCache lirs;
         UnlimitedCache unlimited;
+        NoCache noCache;
     }
 
 
@@ -128,6 +129,10 @@ public class Bag<Item> implements Iterable<Item> {
     public UnlimitedCache getUnlimited() {
       return first.unlimited;
     }
+
+    public NoCache getNoCache() {
+      return first.noCache;
+    }
     /**
      * Returns the number of items in this bag.
      *
@@ -155,6 +160,7 @@ public class Bag<Item> implements Iterable<Item> {
         first.mq = new MQueue(maxCacheSize);
         first.lirs = new LIRSCache(maxCacheSize);
         first.unlimited = new UnlimitedCache(maxCacheSize);
+        first.noCache = new NoCache(maxCacheSize);
         first.next = oldfirst;
         n++;
     }
