@@ -69,6 +69,7 @@ public class CacheSim {
 
 		int blockOperation;
 		int blockId;
+		int version;
 		int size;
 		int offset;
 		int src;
@@ -119,17 +120,18 @@ public class CacheSim {
 
 		while (inLogFile.hasNextLine()) {
 			String[] meta = inLogFile.readLine().split(" ");
-			if (meta[1].equals("READ")) {
+			if (meta[2].equals("READ")) {
 				blockOperation = OPERATION_READ;
 			}
 			else {
 				blockOperation = OPERATION_WRITE;
 			}
-			blockId = Integer.parseInt(meta[2]);
-			size = Integer.parseInt(meta[3]);
-			offset = Integer.parseInt(meta[4]);
-			src = Integer.parseInt(meta[5]);
-			dest = Integer.parseInt(meta[6]);
+			blockId = Integer.parseInt(meta[3]);
+			version = Integer.parseInt(meta[4]);
+			size = Integer.parseInt(meta[5]);
+			offset = Integer.parseInt(meta[6]);
+			src = Integer.parseInt(meta[7]);
+			dest = Integer.parseInt(meta[8]);
 
 			b = new Block(blockOperation, blockId, size, offset, src, dest);
 			b.src = getOrAssignHostId(src) + numRouters;
