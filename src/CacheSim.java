@@ -14,23 +14,24 @@ public class CacheSim {
 	public final static int OPERATION_READ = 0;
 	public final static int OPERATION_WRITE = 1;
 	public final static int OPERATION_REMOVE = 2;
+	public final static int TOTAL_END_HOSTS = 16;
 
-	static int[] lookupTable = new int[128];
+	static int[] lookupTable = new int[TOTAL_END_HOSTS];
 	static Random rand = new Random();
 
 	public static int getOrAssignHostId(int host) {
 		if (host == NAME_NODE) {
-			return 128;
+			return TOTAL_END_HOSTS;
 		}
 
-		for (int i = 0; i < 128; i++) {
+		for (int i = 0; i < TOTAL_END_HOSTS; i++) {
 			if (lookupTable[i] == host) {
 				return i;
 			}
 		}
 
 		while (true) {
-			int i = rand.nextInt(128);
+			int i = rand.nextInt(TOTAL_END_HOSTS);
 			if (lookupTable[i] == 0) {
 				lookupTable[i] = host;
 				return i;
@@ -92,10 +93,10 @@ public class CacheSim {
 		}
 
 		// Topology values
-		final int NUM_NODES = 128;
+		final int NUM_NODES = TOTAL_END_HOSTS;
 		//int numRouters = 1;
 		//int fatTreeK = Integer.parseInt(args[6]);
-		int fatTreeK = 8;
+		int fatTreeK = 4;
 		int podSize = (int)Math.pow(fatTreeK / 2, 2);
 		int nPods = NUM_NODES / podSize;
 		int nEdgePerPod = fatTreeK / 2;

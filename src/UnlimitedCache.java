@@ -1,7 +1,7 @@
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class UnlimitedCache {
-  private HashSet<Long> blocks;
+  private ArrayList<Long> blocks;
 
   private long totalAccesses;
   private long totalHits;
@@ -9,7 +9,7 @@ public class UnlimitedCache {
   private long totalHitsSize;
 
   public UnlimitedCache(int cacheSize) {
-    this.blocks = new HashSet<Long>();
+    this.blocks = new ArrayList<Long>();
   }
 
   public boolean accessCache(long segmentId) {
