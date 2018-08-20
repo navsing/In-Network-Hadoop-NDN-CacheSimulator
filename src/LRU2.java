@@ -39,37 +39,27 @@ public final class LRU2 {
 	private long totalSize;
 	private long totalHitsSize;
 
-	public void accessCache(Block block) {
-		for (int i = 0; i < Math.ceil((double) block.size / (double) CacheSim.CACHE_BLOCK_SIZE); i++) {
-			long internalId = ((int) block.blockId) + ((int) i) * 100000000000L;
-			int internalSize = CacheSim.CACHE_BLOCK_SIZE;
-			if ((i + 1) * CacheSim.CACHE_BLOCK_SIZE > block.size) {
-				internalSize = block.size - (i * CacheSim.CACHE_BLOCK_SIZE);
-			}
-			switch (block.blockOperation) {
-			case CacheSim.OPERATION_READ:
-			case CacheSim.OPERATION_WRITE:
-				customInsert(internalId, internalSize, block);
-				break;
-			}
-		}
+	public boolean accessCache(long segmentId) {
+		totalAccesses++;
+		totalSize += CacheSim.CACHE_BLOCK_SIZE;
+		return customInsert(segmentId);
 	}
 
-	public void customInsert(long key, int internalSize, Block block) {
-		totalAccesses++;
-		totalSize += internalSize;
+	public boolean customInsert(long key) {
+		boolean wasHit = false;
 		Node old = data.get(key);
 		if (old == null) {
 			Node node = new Node(key, sentinel);
 			data.put(key, node);
 			node.appendToTail();
 			evict(node);
-		} else {
-			if (block.blockOperation == CacheSim.OPERATION_READ) {
-				totalHits++;
-				totalHitsSize += internalSize;
-			}
 		}
+		else {
+			totalHits++;
+			totalHitsSize += CacheSim.CACHE_BLOCK_SIZE;
+			wasHit = true;
+		}
+		return wasHit;
 	}
 
 	/** Evicts while the map exceeds the maximum capacity. */
@@ -152,13 +142,17 @@ public final class LRU2 {
 			prev.next = this;
 		}
 	}
-	
-	public void report() {
-   			if(totalAccesses == 0){
-                      		  System.out.println("No Activity");
-                       		 return;
-          		}
 
-        System.out.println(totalAccesses+","+totalHits+","+((double)totalHits)/((double)totalAccesses)+","+totalSize+","+totalHitsSize+","+((double)totalHitsSize)/((double)totalSize));
+	public void report() {
+		if (totalAccesses == 0){
+			System.out.println("0,0,0,0,0,0");
+		}
+		else {
+			System.out.print(totalAccesses + "," + totalHits + ",");
+			System.out.printf("%.16f", ((double)totalHits)/((double)totalAccesses));
+			System.out.print("," + totalSize + "," + totalHitsSize + ",");
+			System.out.printf("%.16f", ((double)totalHitsSize)/((double)totalSize));
+			System.out.println();
+		}
 	}
 }

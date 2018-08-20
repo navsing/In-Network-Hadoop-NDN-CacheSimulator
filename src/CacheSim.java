@@ -325,16 +325,16 @@ public class CacheSim {
 								wasHit = G.returnVertex(curNode).getLRU().accessCache(cacheId);
 								break;
 							case 2:
-								//G.returnVertex(0).getLRFU().accessCache(b);
+								wasHit = G.returnVertex(curNode).getLRFU().accessCache(cacheId);
 								break;
 							case 3:
-								//G.returnVertex(0).getLRU2().accessCache(b);
+								wasHit = G.returnVertex(curNode).getLRU2().accessCache(cacheId);
 								break;
 							case 4:
 								wasHit = G.returnVertex(curNode).getARC().accessCache(cacheId);
 								break;
 							case 5:
-								//G.returnVertex(0).getTwoQueue().accessCache(b);
+								wasHit = G.returnVertex(curNode).getTwoQueue().accessCache(cacheId);
 								break;
 							case 6:
 								//G.returnVertex(0).getOPT().accessCache(b);

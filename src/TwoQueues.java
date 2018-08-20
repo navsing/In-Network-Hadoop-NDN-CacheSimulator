@@ -21,7 +21,7 @@ public final class TwoQueues {
 	private long totalHits;
 	private long totalSize;
 	private long totalHitsSize;
-	
+
 	public TwoQueues(int cacheSize) {
 
 		this.headIn = new Node();
@@ -33,35 +33,21 @@ public final class TwoQueues {
 		this.maxOut = (int)(maximumSize*0.9);
 	}
 
-	public void accessCache(Block block) {
-		for (int i = 0; i < Math.ceil((double) block.size / (double) CacheSim.CACHE_BLOCK_SIZE); i++) {
-			long internalId = ((int) block.blockId) + ((int) i) * 100000000000L;
-			int internalSize = CacheSim.CACHE_BLOCK_SIZE;
-			if ((i + 1) * CacheSim.CACHE_BLOCK_SIZE > block.size) {
-				internalSize = block.size - (i * CacheSim.CACHE_BLOCK_SIZE);
-			}
-			switch (block.blockOperation) {
-			case CacheSim.OPERATION_READ:
-			case CacheSim.OPERATION_WRITE:
-				customInsert(internalId, internalSize, block);
-				break;
-			}
-		}
-	}
-	
-	public void customInsert(long key, int internalSize, Block block) {
+	public boolean accessCache(long segmentId) {
 		totalAccesses++;
-		totalSize += internalSize;
+		totalSize += CacheSim.CACHE_BLOCK_SIZE;
+		return customInsert(segmentId);
+	}
+
+	public boolean customInsert(long key) {
 		Node node = data.get(key);
 		if (node != null) {
 			switch (node.type) {
 			case MAIN:
 				node.moveToTail(headMain);
-				if (block.blockOperation == CacheSim.OPERATION_READ) {
-					totalHits++;
-					totalHitsSize += internalSize;
-				}
-				return;
+				totalHits++;
+				totalHitsSize += CacheSim.CACHE_BLOCK_SIZE;
+				return true;
 			case OUT:
 				node.remove();
 				sizeOut--;
@@ -69,13 +55,11 @@ public final class TwoQueues {
 				node.appendToTail(headMain);
 				node.type = QueueType.MAIN;
 				sizeMain++;
-				return;
+				return false;
 			case IN:
-				if (block.blockOperation == CacheSim.OPERATION_READ) {
-					totalHits++;
-					totalHitsSize += internalSize;
-				}				
-				return;
+				totalHits++;
+				totalHitsSize += CacheSim.CACHE_BLOCK_SIZE;
+				return true;
 			default:
 				throw new IllegalStateException();
 			}
@@ -85,6 +69,7 @@ public final class TwoQueues {
 			reclaimfor(node);
 			node.appendToTail(headIn);
 			sizeIn++;
+			return false;
 		}
 	}
 
@@ -172,13 +157,17 @@ public final class TwoQueues {
 			}
 		}
 	}
-	
-	public void report() {
-   if(totalAccesses == 0){
-                        System.out.println("No Activity");
-                        return;
-                }
 
-                System.out.println(totalAccesses+","+totalHits+","+((double)totalHits)/((double)totalAccesses)+","+totalSize+","+totalHitsSize+","+((double)totalHitsSize)/((double)totalSize));
+	public void report() {
+    if (totalAccesses == 0){
+			System.out.println("0,0,0,0,0,0");
+		}
+		else {
+			System.out.print(totalAccesses + "," + totalHits + ",");
+			System.out.printf("%.16f", ((double)totalHits)/((double)totalAccesses));
+			System.out.print("," + totalSize + "," + totalHitsSize + ",");
+			System.out.printf("%.16f", ((double)totalHitsSize)/((double)totalSize));
+			System.out.println();
+		}
 	}
 }
