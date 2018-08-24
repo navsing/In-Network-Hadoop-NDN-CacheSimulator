@@ -14,7 +14,7 @@ public class CacheSim {
 	public final static int OPERATION_READ = 0;
 	public final static int OPERATION_WRITE = 1;
 	public final static int OPERATION_REMOVE = 2;
-	public final static int TOTAL_END_HOSTS = 16;
+	public final static int TOTAL_END_HOSTS = 128;
 
 	static int[] lookupTable = new int[TOTAL_END_HOSTS];
 	static Random rand = new Random();
@@ -96,7 +96,7 @@ public class CacheSim {
 		final int NUM_NODES = TOTAL_END_HOSTS;
 		//int numRouters = 1;
 		//int fatTreeK = Integer.parseInt(args[6]);
-		int fatTreeK = 4;
+		int fatTreeK = 8;
 		int podSize = (int)Math.pow(fatTreeK / 2, 2);
 		int nPods = NUM_NODES / podSize;
 		int nEdgePerPod = fatTreeK / 2;
@@ -113,7 +113,7 @@ public class CacheSim {
 		In topology = new In(args[0]);
 		Graph G = new Graph(topology, CACHE_MAX_MBLOCKS);
 		In inLogFile = new In(args[1]);
-		int policyName = Integer.parseInt(args[2]);
+		String policyName = args[2];
 		/*int edgePolicyName = Integer.parseInt(args[2]);
 		int aggrPolicyName = Integer.parseInt(args[3]);
 		int corePolicyName = Integer.parseInt(args[4]);*/
@@ -121,18 +121,18 @@ public class CacheSim {
 
 		while (inLogFile.hasNextLine()) {
 			String[] meta = inLogFile.readLine().split(" ");
-			if (meta[2].equals("READ")) {
+			if (meta[1].equals("READ")) {
 				blockOperation = OPERATION_READ;
 			}
 			else {
 				blockOperation = OPERATION_WRITE;
 			}
-			blockId = Integer.parseInt(meta[3]);
-			version = Integer.parseInt(meta[4]);
-			size = Integer.parseInt(meta[5]);
-			offset = Integer.parseInt(meta[6]);
-			src = Integer.parseInt(meta[7]);
-			dest = Integer.parseInt(meta[8]);
+			blockId = Integer.parseInt(meta[2]);
+			//version = Integer.parseInt(meta[3]);
+			size = Integer.parseInt(meta[3]);
+			offset = Integer.parseInt(meta[4]);
+			src = Integer.parseInt(meta[5]);
+			dest = Integer.parseInt(meta[6]);
 
 			b = new Block(blockOperation, blockId, size, offset, src, dest);
 			b.src = getOrAssignHostId(src) + numRouters;
@@ -321,34 +321,34 @@ public class CacheSim {
 						totalTrafficBytes += CACHE_BLOCK_SIZE; // Add before reaching node
 						assertNoOverflow(oldTrafficBytes, totalTrafficBytes);
 						switch (policyName) {
-							case 1:
+							case "LRU":
 								wasHit = G.returnVertex(curNode).getLRU().accessCache(cacheId);
 								break;
-							case 2:
+							case "LRFU":
 								wasHit = G.returnVertex(curNode).getLRFU().accessCache(cacheId);
 								break;
-							case 3:
+							case "LRU2":
 								wasHit = G.returnVertex(curNode).getLRU2().accessCache(cacheId);
 								break;
-							case 4:
+							case "ARC":
 								wasHit = G.returnVertex(curNode).getARC().accessCache(cacheId);
 								break;
-							case 5:
+							case "2Q":
 								wasHit = G.returnVertex(curNode).getTwoQueue().accessCache(cacheId);
 								break;
-							case 6:
+							case "OPT":
 								//G.returnVertex(0).getOPT().accessCache(b);
 								break;
-							case 7:
+							case "MQ":
 								wasHit = G.returnVertex(curNode).getMQ().accessCache(cacheId);
 								break;
-							case 8:
+							case "LIRS":
 								wasHit = G.returnVertex(curNode).getLirs().accessCache(cacheId);
 								break;
-							case 9:
+							case "Unlimited":
 								wasHit = G.returnVertex(curNode).getUnlimited().accessCache(cacheId);
 								break;
-							case 10:
+							case "NoCache":
 								wasHit = G.returnVertex(curNode).getNoCache().accessCache(cacheId);
 								break;
 							default:
@@ -468,35 +468,35 @@ public class CacheSim {
 		System.out.println("Core:");
 		for(int i = coreStart; i < nCore; i++){
 			switch(policyName){
-			case 1:
+			case "LRU":
 				G.returnVertex(i).getLRU().report();
 				break;
-			case 2:
+			case "LRFU":
 				G.returnVertex(i).getLRFU().report();
 				break;
-			case 3:
+			case "LRU2":
 				G.returnVertex(i).getLRU2().report();
 				break;
-			case 4:
+			case "ARC":
 				//System.out.println("ARC");
 				G.returnVertex(i).getARC().report();
 				break;
-			case 5:
+			case "2Q":
 				G.returnVertex(i).getTwoQueue().report();
 				break;
-			case 6:
+			case "OPT":
 				//G.returnVertex(i).getOPT().report();
 				break;
-			case 7:
+			case "MQ":
 				G.returnVertex(i).getMQ().report();
 				break;
-			case 8:
+			case "LIRS":
 				G.returnVertex(i).getLirs().report();
 				break;
-			case 9:
+			case "Unlimited":
 				G.returnVertex(i).getUnlimited().report();
 				break;
-			case 10:
+			case "NoCache":
 				G.returnVertex(i).getNoCache().report();
 				break;
 			default:
@@ -508,35 +508,35 @@ public class CacheSim {
 		System.out.println("Aggregation:");
 		for(int i = aggrStart; i < aggrStart + nAggrPerPod * nPods; i++){
 			switch(policyName){
-			case 1:
+			case "LRU":
 				G.returnVertex(i).getLRU().report();
 				break;
-			case 2:
+			case "LRFU":
 				G.returnVertex(i).getLRFU().report();
 				break;
-			case 3:
+			case "LRU2":
 				G.returnVertex(i).getLRU2().report();
 				break;
-			case 4:
+			case "ARC":
 				//System.out.println("ARC");
 				G.returnVertex(i).getARC().report();
 				break;
-			case 5:
+			case "2Q":
 				G.returnVertex(i).getTwoQueue().report();
 				break;
-			case 6:
+			case "OPT":
 				//G.returnVertex(i).getOPT().report();
 				break;
-			case 7:
+			case "MQ":
 				G.returnVertex(i).getMQ().report();
 				break;
-			case 8:
+			case "LIRS":
 				G.returnVertex(i).getLirs().report();
 				break;
-			case 9:
+			case "Unlimited":
 				G.returnVertex(i).getUnlimited().report();
 				break;
-			case 10:
+			case "NoCache":
 				G.returnVertex(i).getNoCache().report();
 				break;
 			default:
@@ -548,35 +548,35 @@ public class CacheSim {
 		System.out.println("Edge:");
 		for(int i = edgeStart; i < edgeStart + nEdgePerPod * nPods; i++){
 			switch(policyName){
-			case 1:
+			case "LRU":
 				G.returnVertex(i).getLRU().report();
 				break;
-			case 2:
+			case "LRFU":
 				G.returnVertex(i).getLRFU().report();
 				break;
-			case 3:
+			case "LRU2":
 				G.returnVertex(i).getLRU2().report();
 				break;
-			case 4:
+			case "ARC":
 				//System.out.println("ARC");
 				G.returnVertex(i).getARC().report();
 				break;
-			case 5:
+			case "2Q":
 				G.returnVertex(i).getTwoQueue().report();
 				break;
-			case 6:
+			case "OPT":
 				//G.returnVertex(i).getOPT().report();
 				break;
-			case 7:
+			case "MQ":
 				G.returnVertex(i).getMQ().report();
 				break;
-			case 8:
+			case "LIRS":
 				G.returnVertex(i).getLirs().report();
 				break;
-			case 9:
+			case "Unlimited":
 				G.returnVertex(i).getUnlimited().report();
 				break;
-			case 10:
+			case "NoCache":
 				G.returnVertex(i).getNoCache().report();
 				break;
 			default:

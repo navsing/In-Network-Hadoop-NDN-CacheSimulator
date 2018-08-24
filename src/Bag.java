@@ -64,7 +64,7 @@ public class Bag<Item> implements Iterable<Item> {
         LRFUCache lrfu;
         LRU2 lru2;
         ARCCache arc;
-        TwoQueues twoQueue;
+        TwoQueueCache twoQueue;
         //OPT opt;
         MQueue mq;
         LIRSCache lirs;
@@ -110,7 +110,7 @@ public class Bag<Item> implements Iterable<Item> {
     	return first.arc;
     }
 
-    public TwoQueues getTwoQueue(){
+    public TwoQueueCache getTwoQueue(){
     	return first.twoQueue;
     }
 
@@ -155,7 +155,7 @@ public class Bag<Item> implements Iterable<Item> {
         first.lrfu = new LRFUCache(maxCacheSize);
         first.lru2 = new LRU2(maxCacheSize);
         first.arc = new ARCCache(maxCacheSize);
-        first.twoQueue = new TwoQueues(maxCacheSize);
+        first.twoQueue = new TwoQueueCache(maxCacheSize);
         //first.opt = new OPT(maxCacheSize);
         first.mq = new MQueue(maxCacheSize);
         first.lirs = new LIRSCache(maxCacheSize);
