@@ -5,4 +5,4 @@ all: clean
 	javac -classpath src -d build src/CacheSim.java
 
 clean:
-	rm -rf build *.class
+	rm -rf build

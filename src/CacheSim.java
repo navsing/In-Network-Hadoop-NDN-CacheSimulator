@@ -662,6 +662,7 @@ public class CacheSim {
 			}
 		}
 
-		System.err.println(totalTrafficBytes);
+		System.out.println();
+		System.out.println("Total network traffic: " + totalTrafficBytes);
 	}
 }
