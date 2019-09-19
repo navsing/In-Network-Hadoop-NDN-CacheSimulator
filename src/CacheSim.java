@@ -61,10 +61,10 @@ public class CacheSim {
 
 	public static void main(String[] args) {
 		//if (args.length < 7 || args.length > 8) {
-		if (args.length < 5 || args.length > 7) {
+		if (args.length < 7 || args.length > 9) {
 			System.err.println("Usage: ");
 			//System.err.println("java CacheSim [topology] [inLogFile] [edgePolicyName] [aggrPolicyName] [corePolicyName] [cacheMaxBlocks] [fatTreeK] (randSeed)");
-			System.err.println("java CacheSim [topology] [inLogFile] [policyName] [cacheBlockSize] [cacheMaxBlocks] (randSeed) (nameNode)");
+			System.err.println("java CacheSim [topology] [inLogFile] [edgePolicyName] [aggrPolicyName] [corePolicyName] [cacheBlockSize] [cacheMaxBlocks] (randSeed) (nameNode)");
 			System.exit(-1);
 		}
 
@@ -79,17 +79,17 @@ public class CacheSim {
 		//Queue<Block> cache = new Queue<Block>();
 		Block b;
 
-		CACHE_BLOCK_SIZE = Integer.parseInt(args[3]);
-		int CACHE_MAX_MBLOCKS = Integer.parseInt(args[4]);
+		CACHE_BLOCK_SIZE = Integer.parseInt(args[5]);
+		int CACHE_MAX_MBLOCKS = Integer.parseInt(args[6]);
 
 		// Set prng seed (if specified)
-		if (args.length > 5) {
-			long seed = Long.parseLong(args[5]);
+		if (args.length > 7) {
+			long seed = Long.parseLong(args[7]);
 			rand.setSeed(seed);
 		}
 
-		if (args.length > 6) {
-			NAME_NODE = Integer.parseInt(args[6]);
+		if (args.length > 8) {
+			NAME_NODE = Integer.parseInt(args[8]);
 		}
 
 		// Topology values
@@ -113,7 +113,9 @@ public class CacheSim {
 		In topology = new In(args[0]);
 		Graph G = new Graph(topology, CACHE_MAX_MBLOCKS);
 		In inLogFile = new In(args[1]);
-		String policyName = args[2];
+		String edgePolicyName = args[2];
+		String aggrPolicyName = args[3];
+		String corePolicyName = args[4];
 		/*int edgePolicyName = Integer.parseInt(args[2]);
 		int aggrPolicyName = Integer.parseInt(args[3]);
 		int corePolicyName = Integer.parseInt(args[4]);*/
@@ -320,40 +322,116 @@ public class CacheSim {
 						long oldTrafficBytes = totalTrafficBytes;
 						totalTrafficBytes += CACHE_BLOCK_SIZE; // Add before reaching node
 						assertNoOverflow(oldTrafficBytes, totalTrafficBytes);
-						switch (policyName) {
-							case "LRU":
-								wasHit = G.returnVertex(curNode).getLRU().accessCache(cacheId);
-								break;
-							case "LRFU":
-								wasHit = G.returnVertex(curNode).getLRFU().accessCache(cacheId);
-								break;
-							case "LRU2":
-								wasHit = G.returnVertex(curNode).getLRU2().accessCache(cacheId);
-								break;
-							case "ARC":
-								wasHit = G.returnVertex(curNode).getARC().accessCache(cacheId);
-								break;
-							case "2Q":
-								wasHit = G.returnVertex(curNode).getTwoQueue().accessCache(cacheId);
-								break;
-							case "OPT":
-								//G.returnVertex(0).getOPT().accessCache(b);
-								break;
-							case "MQ":
-								wasHit = G.returnVertex(curNode).getMQ().accessCache(cacheId);
-								break;
-							case "LIRS":
-								wasHit = G.returnVertex(curNode).getLirs().accessCache(cacheId);
-								break;
-							case "Unlimited":
-								wasHit = G.returnVertex(curNode).getUnlimited().accessCache(cacheId);
-								break;
-							case "NoCache":
-								wasHit = G.returnVertex(curNode).getNoCache().accessCache(cacheId);
-								break;
-							default:
-								System.err.println("Enter the right parameter for cache policy");
-								System.exit(-3);
+						if (curNode >= edgeStart) {
+							switch (edgePolicyName) {
+								case "LRU":
+									wasHit = G.returnVertex(curNode).getLRU().accessCache(cacheId);
+									break;
+								case "LRFU":
+									wasHit = G.returnVertex(curNode).getLRFU().accessCache(cacheId);
+									break;
+								case "LRU2":
+									wasHit = G.returnVertex(curNode).getLRU2().accessCache(cacheId);
+									break;
+								case "ARC":
+									wasHit = G.returnVertex(curNode).getARC().accessCache(cacheId);
+									break;
+								case "2Q":
+									wasHit = G.returnVertex(curNode).getTwoQueue().accessCache(cacheId);
+									break;
+								case "OPT":
+									//G.returnVertex(0).getOPT().accessCache(b);
+									break;
+								case "MQ":
+									wasHit = G.returnVertex(curNode).getMQ().accessCache(cacheId);
+									break;
+								case "LIRS":
+									wasHit = G.returnVertex(curNode).getLirs().accessCache(cacheId);
+									break;
+								case "Unlimited":
+									wasHit = G.returnVertex(curNode).getUnlimited().accessCache(cacheId);
+									break;
+								case "NoCache":
+									wasHit = G.returnVertex(curNode).getNoCache().accessCache(cacheId);
+									break;
+								default:
+									System.err.println("Incorrect parameter entered for edge cache policy");
+									System.exit(-3);
+							}
+						}
+						else if (curNode >= aggrStart) {
+							switch (aggrPolicyName) {
+								case "LRU":
+									wasHit = G.returnVertex(curNode).getLRU().accessCache(cacheId);
+									break;
+								case "LRFU":
+									wasHit = G.returnVertex(curNode).getLRFU().accessCache(cacheId);
+									break;
+								case "LRU2":
+									wasHit = G.returnVertex(curNode).getLRU2().accessCache(cacheId);
+									break;
+								case "ARC":
+									wasHit = G.returnVertex(curNode).getARC().accessCache(cacheId);
+									break;
+								case "2Q":
+									wasHit = G.returnVertex(curNode).getTwoQueue().accessCache(cacheId);
+									break;
+								case "OPT":
+									//G.returnVertex(0).getOPT().accessCache(b);
+									break;
+								case "MQ":
+									wasHit = G.returnVertex(curNode).getMQ().accessCache(cacheId);
+									break;
+								case "LIRS":
+									wasHit = G.returnVertex(curNode).getLirs().accessCache(cacheId);
+									break;
+								case "Unlimited":
+									wasHit = G.returnVertex(curNode).getUnlimited().accessCache(cacheId);
+									break;
+								case "NoCache":
+									wasHit = G.returnVertex(curNode).getNoCache().accessCache(cacheId);
+									break;
+								default:
+									System.err.println("Incorrect parameter entered for aggregation cache policy");
+									System.exit(-3);
+							}
+						}
+						else {
+							switch (corePolicyName) {
+								case "LRU":
+									wasHit = G.returnVertex(curNode).getLRU().accessCache(cacheId);
+									break;
+								case "LRFU":
+									wasHit = G.returnVertex(curNode).getLRFU().accessCache(cacheId);
+									break;
+								case "LRU2":
+									wasHit = G.returnVertex(curNode).getLRU2().accessCache(cacheId);
+									break;
+								case "ARC":
+									wasHit = G.returnVertex(curNode).getARC().accessCache(cacheId);
+									break;
+								case "2Q":
+									wasHit = G.returnVertex(curNode).getTwoQueue().accessCache(cacheId);
+									break;
+								case "OPT":
+									//G.returnVertex(0).getOPT().accessCache(b);
+									break;
+								case "MQ":
+									wasHit = G.returnVertex(curNode).getMQ().accessCache(cacheId);
+									break;
+								case "LIRS":
+									wasHit = G.returnVertex(curNode).getLirs().accessCache(cacheId);
+									break;
+								case "Unlimited":
+									wasHit = G.returnVertex(curNode).getUnlimited().accessCache(cacheId);
+									break;
+								case "NoCache":
+									wasHit = G.returnVertex(curNode).getNoCache().accessCache(cacheId);
+									break;
+								default:
+									System.err.println("Incorrect parameter entered for core cache policy");
+									System.exit(-3);
+							}
 						}
 
 						if (wasHit) {
@@ -467,7 +545,7 @@ public class CacheSim {
 
 		System.out.println("Core:");
 		for(int i = coreStart; i < nCore; i++){
-			switch(policyName){
+			switch(corePolicyName){
 			case "LRU":
 				G.returnVertex(i).getLRU().report();
 				break;
@@ -507,7 +585,7 @@ public class CacheSim {
 		System.out.println();
 		System.out.println("Aggregation:");
 		for(int i = aggrStart; i < aggrStart + nAggrPerPod * nPods; i++){
-			switch(policyName){
+			switch(aggrPolicyName){
 			case "LRU":
 				G.returnVertex(i).getLRU().report();
 				break;
@@ -547,7 +625,7 @@ public class CacheSim {
 		System.out.println();
 		System.out.println("Edge:");
 		for(int i = edgeStart; i < edgeStart + nEdgePerPod * nPods; i++){
-			switch(policyName){
+			switch(edgePolicyName){
 			case "LRU":
 				G.returnVertex(i).getLRU().report();
 				break;
